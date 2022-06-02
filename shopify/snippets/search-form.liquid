@@ -1,0 +1,29 @@
+<form
+    action="{{ routes.search_url }}"
+    method="get"
+    role="search"
+    class="w-full flex h-16 md:h-full"
+>
+    {% comment %} search only in products {% endcomment %}
+    <input type="hidden" name="type" value="product" />
+
+    <input
+    type="text"
+    id="Search"
+    name="q"
+    value="{{ search.terms }}"
+    placeholder="{{ 'search.placeholder' | t }}"
+    class="w-full rounded-r-none px-3 md:h-20"
+    >
+
+    <button class="button button-primary small w-auto inline-flex items-center flex-shrink-0 rounded-l-none">
+    {% render 'icon-search', class: 'w-6 h-auto sm:mr-2' %}
+    
+    {% unless small_button %}
+        <span class="hidden sm:inline-block">
+            {{ 'action.to_search' | t }}
+        </span>
+    {% endunless %}
+ 
+    </button>
+</form>

@@ -1,0 +1,16 @@
+/**
+ * entry file for Tailwind CSS
+ * and other style files
+ */
+@import "~@dango-digital/gocart/src/lib/scss/go-cart";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+
+//functions
+@import "functions/_rem";
+
+@import "_fonts";
+@import "_globals";
+@import "cart";

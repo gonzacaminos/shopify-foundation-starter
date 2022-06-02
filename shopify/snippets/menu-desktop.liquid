@@ -1,0 +1,87 @@
+    <ul class="main-menu flex h-full items-center {% unless bottom_navigation %}hidden lg:flex{% endunless %}" role="list"
+    x-data="{
+        activeMenu: -1,
+        selected: 1,
+        get isActive() {  return this.activeMenu },
+        get isSelected() {  return this.selected },
+        select(_sel) { this.selected = _sel },
+        setActiveMenu(_sel) { this.activeMenu = _sel },
+      }"
+    >
+      {%- for link in menu.links -%}
+        {%- assign link_title_downcase = link.title | downcase -%}
+        {%- assign link_title_downcase = link.title | downcase -%}
+        {%- assign mega_menu_block = '' -%}
+        {%- assign mega_menu_images = '' -%}
+  
+        {%- for block in section.blocks -%}
+          {%- assign menu_item_downcase = block.settings.menu_item | downcase -%}
+  
+          {%- if menu_item_downcase == link_title_downcase -%}
+            {%- assign mega_menu_block = block -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+  
+        <li class="text-sm uppercase leading-tight flex h-full px-8 items-center {% if mega_menu_block != '' %}has-dropdown{% endif %}" data-item-title="{{ link.title | escape }}" @mouseenter="setActiveMenu({{forloop.index}})"  @mouseleave="setActiveMenu(-1)">
+          <a class="flex items-center border-b transition duration-150 mt-px {% if link.active %}border-black{% else %}border-transparent hover:border-black{% endif %}" href="{{ link.url }}" {% if link.links.size > 0 or mega_menu_block != '' %} aria-controls="desktop-menu-{{ forloop.index }}" aria-expanded="false"{% endif %}>
+            {{- link.title -}}
+            {% if mega_menu_block != '' %}<span class="ml-2 mb-px"> {% render 'icon-chevron-down' %}</span>{% endif %}
+            
+          </a>
+  
+          {%- if mega_menu_block != '' -%}
+  
+            
+              <div id="desktop-menu-{{ forloop.index }}" class="drop-shadow-md self-start mt-24 absolute w-full left-0 right-0 bg-white z-50 mega-menu" {{ mega_menu_block.shopify_attributes }} x-show="isActive == {{ forloop.index }}" x-cloak>
+                <div class="container h-full static py-8 mega-menu__inner">
+                  
+                  {%- if mega_menu_block.type == 'mega_menu_product' -%}
+                  <div class="grid grid-cols-5 space-x-4">
+                    {% render 'mega-menu-product', product: mega_menu_block.settings.product_1, title: mega_menu_block.settings.title_1, image:  mega_menu_block.settings.image_1, url: mega_menu_block.settings.url_1 %}
+                    {% render 'mega-menu-product', product: mega_menu_block.settings.product_2, title: mega_menu_block.settings.title_2, image:  mega_menu_block.settings.image_2, url: mega_menu_block.settings.url_2 %}
+                    {% render 'mega-menu-product', product: mega_menu_block.settings.product_3, title: mega_menu_block.settings.title_3, image:  mega_menu_block.settings.image_3, url: mega_menu_block.settings.url_3 %}
+                    {% render 'mega-menu-product', product: mega_menu_block.settings.product_4, title: mega_menu_block.settings.title_4, image:  mega_menu_block.settings.image_4, url: mega_menu_block.settings.url_4 %}
+                    {% if mega_menu_block.settings.collection_url != blank %}
+                      <div class="px-4 flex items-center border-l">
+                        <a href="{{mega_menu_block.settings.collection_url}}">
+                          {{mega_menu_block.settings.collection_url_title}}
+                        </a>
+                      </div>
+                    {% endif %}
+                  </div>
+
+                  {%- else -%}
+                    {% render 'mega-menu-links', block: mega_menu_block.settings, collection_url_title:  mega_menu_block.settings.collection_url_title, collection_url: mega_menu_block.settings.collection_url %}
+                  {%- endif -%}
+                                     
+                </div>
+              </div>
+          {%- elsif link.links.size > 0 -%}
+            <ul hidden id="desktop-menu-{{ forloop.index }}" class="nav-dropdown {% if link.levels == 1 %}nav-dropdown--restrict{% endif %} list--unstyled" role="list">
+              {%- for sub_link in link.links -%}
+                <li class="nav-dropdown__item {% if sub_link.links.size > 0 %}has-dropdown{% endif %}">
+                  <a class="nav-dropdown__link link--faded" href="{{ sub_link.url }}" {% if sub_link.links.size > 0 %}aria-controls="desktop-menu-{{ forloop.parentloop.index }}-{{ forloop.index }}" aria-expanded="false"{% endif %}>
+                    {{- sub_link.title -}}
+  
+                    {%- if sub_link.links.size > 0 -%}
+                      {% render 'icon' with 'dropdown-arrow-right', direction_aware: true %}
+                    {%- endif -%}
+                  </a>
+  
+                  {%- if sub_link.links.size > 0 -%}
+                    <ul hidden id="desktop-menu-{{ forloop.parentloop.index }}-{{ forloop.index }}" class="nav-dropdown list--unstyled" role="list">
+                      {%- for sub_sub_link in sub_link.links -%}
+                        <li class="nav-dropdown__item">
+                          <a class="nav-dropdown__link link--faded" href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>

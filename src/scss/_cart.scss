@@ -1,0 +1,50 @@
+.go-cart{
+
+    &-item {
+        &__remove{
+            text-indent: -9999px;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACzSURBVHgB7ZXNDcIwDIWfEQMwQmfqESQ6AxuUDbpCkeDYmToCCxDjIA5Q2YYIqv6o36GVEid+38UBpg55m/WlKSigkqqNUdIyoSy2eW3dsYLXnVE6l0cyqamcfazhk8XPfperpqdzw/LzAvgG/+At2TPRz7wa926gEk1SbLz63g2+atBNmGI4DoOlwdLA5dM0fdCdptZ01RjGgBlXkocmZR5JYautqwaB+GAdsAKFGx8xS+6erD/eDHPjugAAAABJRU5ErkJggg==') center no-repeat;
+            width: 20px;
+            height: 30px;
+            
+        }
+
+        &__info footer{
+            @apply mt-4 flex;
+        }
+        
+        &__quantity {
+            bottom: unset;
+            right: 0;
+            &-label {
+                display: none;
+            }
+        }
+        &__price {
+            position: static  !important;
+            bottom: unset;
+        }       
+    }
+
+    &-drawer {
+        &__header {
+            @apply justify-between;
+        }
+
+        &__content {
+            height: calc(100% - 400px);
+            @apply overflow-y-auto;
+        }
+
+    }
+
+    &__drawer {
+        &.is-empty {
+            .go-cart-upsell-list {
+                display: none;
+            }
+        }
+    }
+}
+
+

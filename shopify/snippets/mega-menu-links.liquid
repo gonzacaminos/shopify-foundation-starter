@@ -1,0 +1,15 @@
+{%- if block.links_1 !=  blank -%}
+    <div class="grid grid-cols-4">
+        {% render 'mega-menu-links-list', links: block.links_1, title: block.title_1, collection_url: block.collection_url_1, collection_title: block.collection_url_title_1 %}
+        {% render 'mega-menu-links-list', links: block.links_2, title: block.title_2, collection_url: block.collection_url_2, collection_title: block.collection_url_title_2 %}
+        {% render 'mega-menu-links-list', links: block.links_3, title: block.title_3, collection_url: block.collection_url_3, collection_title: block.collection_url_title_3 %}
+        {% if collection_url != blank %}
+            <div class="px-4 flex items-center border-l">
+            <a href="{{collection_url}}">
+                {{collection_url_title}}
+            </a>
+            </div>
+        {% endif %}
+    </div>
+   
+{%- endif -%}

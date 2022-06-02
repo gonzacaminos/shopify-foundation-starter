@@ -1,0 +1,360 @@
+<div class="bg-white border-b border-gray-200"
+x-data="{
+  openMobile: false,
+  openSearch: false,
+  get isOpen() {  return this.openMobile },
+  toggleMenu() { this.openMobile = !this.openMobile },
+  get isOpenSearch() {  return this.openSearch },
+  toggleSearch() { this.openSearch = !this.openSearch }
+}"
+>
+
+  {% assign icon_class = 'w-auto h-7 text-black' %}
+  {% assign link_class = 'flex flex-col justify-center items-center text-sm text-gray-600 hover:text-black font-medium transition duration-150 p-2' %}
+
+  <div class="container max-w-page-width">
+   
+    <div class="h-16 md:h-24 flex justify-between md:justify-start items-center pr-3">
+
+      <div class="mr-8 md:hidden flex items-center">
+        <button @click="toggleMenu()" class="{{ link_class }}">
+          <span x-show="!isOpen">{% render 'icon-menu', class: icon_class %}</span>
+          <span x-cloak x-show="isOpen">{% render 'icon-cancel', class: icon_class %}</span>
+        </button>
+      </div>
+
+      <a
+        href="{{ routes.root_url }}"
+        class="header-brand mx-auto inline-block text-2xl lg:text-3xl font-bold ml-0">
+        {% if section.settings.logo != blank %}
+          {% if section.settings.logo_mobile != blank %}
+            <span class="md:hidden"> {{ section.settings.logo_mobile | img_url: 'master' | img_tag }} </span>
+            <span class="hidden md:inline-block"> {{ section.settings.logo | img_url: 'master' | img_tag }} </span>
+          {% else %}
+            {{ section.settings.logo | img_url: 'master' | img_tag }}
+          {% endif %}
+        {% else %}
+          {{ shop.name }}
+        {% endif %}
+        
+      </a>
+
+      <div class="ml-24 hidden md:block md:h-full">
+        {%- render 'menu-desktop', menu: section.settings.navigation_menu -%}
+      </div>
+
+      <div class="flex space-x-2 lg:space-x-6 ml-auto items-center">
+        <button
+          class="{{ link_class }}"
+          @click="toggleSearch()"
+        >
+          {% render 'icon-search', class: icon_class %}
+        </button>
+
+        <div class="text-body flex items-center bg-white px-2 absolute z-40 top-2 left-0 right-0 md:w-full md:p-4 md:!ml-0" x-show="isOpenSearch" x-cloak>
+          {% render 'search-form', small_button: true %}
+          <span class="ml-4 cursor-pointer" @click="toggleSearch()">
+            {% render 'icon-cancel' %}
+          </span>
+        </div>
+
+        {% if shop.customer_accounts_enabled %}
+          <a
+            href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
+            class="hidden md:inline-block {{ link_class }}"
+          >
+            {% render 'icon-account', class: icon_class %}
+          </a>
+        {% endif %}
+        
+        {% comment %}
+        <span class="hidden md:inline-block">
+           {% render 'layout-select-locale' %} 
+        </span>
+        {% endcomment %}
+
+        {% comment %}
+        <a
+          href="{{ routes.cart_url }}"
+          class="{{ link_class }} relative"
+        >
+          {% render 'icon-cart', class: icon_class %}
+
+          {% if cart.item_count > 0 %}
+            <div class="w-5 h-5 flex justify-center items-center bg-black text-white text-xs border border-white rounded-full absolute top-0 right-0">
+              {{ cart.item_count }}
+            </div>
+          {% endif %}
+        </a>
+        {% endcomment %}
+        <div class="go-cart-button-wrapper overflow-hidden">
+          {% render 'go-cart-button' %}
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  {%- render 'menu-mobile', menu: section.settings.navigation_menu -%}
+  
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "class": "layout-header relative z-40",
+  "settings": [
+    {
+      "type": "image_picker",
+      "label": "Logo",
+      "id": "logo"
+    },
+    {
+      "type": "image_picker",
+      "label": "Mobile Logo",
+      "id": "logo_mobile"
+    },
+    {
+      "type": "link_list",
+      "id": "navigation_menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_sticky",
+      "label": "Mobile sticky header",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "desktop_sticky",
+      "label": "Desktop sticky header",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu_product",
+      "name": "Mega Menu (product)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_item",
+          "label": "Menu item",
+          "info": "Enter menu item to apply a mega menu dropdown. [Learn more](https://support.maestrooo.com/article/180-navigation-enabling-and-configuring-mega-navigation)."
+        },
+        {
+          "type": "header",
+          "content": "First Item"
+        },
+        {
+          "type": "product",
+          "id": "product_1",
+          "label": "Product 1 (if empty manual fields will be shown)"
+        },
+        {
+          "type": "text",
+          "id": "title_1",
+          "label": "Title 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image 1"
+        },
+        {
+          "type": "url",
+          "id": "url_1",
+          "label": "Url 1"
+        },
+        {
+          "type": "header",
+          "content": "Second Item"
+        },
+        {
+          "type": "product",
+          "id": "product_2",
+          "label": "Product 2 (if empty manual fields will be shown)"
+        },
+        {
+          "type": "text",
+          "id": "title_2",
+          "label": "Title 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image 2"
+        },
+        {
+          "type": "url",
+          "id": "url_2",
+          "label": "Url 2"
+        },
+        {
+          "type": "header",
+          "content": "Third Item"
+        },
+        {
+          "type": "product",
+          "id": "product_3",
+          "label": "Product 3 (if empty manual fields will be shown)"
+        },
+        {
+          "type": "text",
+          "id": "title_3",
+          "label": "Title 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image 3"
+        },
+        {
+          "type": "url",
+          "id": "url_3",
+          "label": "Url 3"
+        },
+        {
+          "type": "header",
+          "content": "Fourth Item"
+        },
+        {
+          "type": "product",
+          "id": "product_4",
+          "label": "Product 4 (if empty manual fields will be shown)"
+        },
+        {
+          "type": "text",
+          "id": "title_4",
+          "label": "Title 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_4",
+          "label": "Image 4"
+        },
+        {
+          "type": "url",
+          "id": "url_4",
+          "label": "Url 4"
+        },
+        {
+          "type": "header",
+          "content": "Collection Url"
+        },
+        {
+          "type": "text",
+          "id": "collection_url_title",
+          "label": "Collection URL Title"
+        },
+        {
+          "type": "url",
+          "id": "collection_url",
+          "label": "Collection URL Title"
+        }
+      ]
+    },
+    {
+      "type": "mega_menu_links",
+      "name": "Mega Menu (links)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_item",
+          "label": "Menu item",
+          "info": "Enter menu item to apply a mega menu dropdown. It has to match the nav item label, e.g Home, Contact, etc."
+        },
+        {
+          "type": "header",
+          "content": "First list"
+        },
+        {
+          "type": "text",
+          "label": "List 1 Title",
+          "id": "title_1"
+        },
+        {
+          "type": "link_list",
+          "label": "List 1 links",
+          "id": "links_1"
+        },
+        {
+          "type": "text",
+          "id": "collection_url_title_1",
+          "label": "List 1 Collection Title"
+        },
+        {
+          "type": "url",
+          "id": "collection_url_1",
+          "label": "List 1 Collection URL"
+        },
+        {
+          "type": "header",
+          "content": "Second list"
+        },
+        {
+          "type": "text",
+          "label": "List 2 Title",
+          "id": "title_2"
+        },
+        {
+          "type": "link_list",
+          "label": "List 2 links",
+          "id": "links_2"
+        },
+        {
+          "type": "text",
+          "id": "collection_url_title_2",
+          "label": "List 2 Collection Title"
+        },
+        {
+          "type": "url",
+          "id": "collection_url_2",
+          "label": "List 2 Collection URL"
+        },
+        {
+          "type": "header",
+          "content": "Third list"
+        },
+        {
+          "type": "text",
+          "label": "List 3 Title",
+          "id": "title_3"
+        },
+        {
+          "type": "link_list",
+          "label": "List 3 links",
+          "id": "links_3"
+        },
+        {
+          "type": "text",
+          "id": "collection_url_title_3",
+          "label": "List 3 Collection Title"
+        },
+        {
+          "type": "url",
+          "id": "collection_url_3",
+          "label": "List 3 Collection URL"
+        },
+        {
+          "type": "header",
+          "content": "Collection Url"
+        },
+        {
+          "type": "text",
+          "id": "collection_url_title",
+          "label": "Collection URL Title"
+        },
+        {
+          "type": "url",
+          "id": "collection_url",
+          "label": "Collection URL Title"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

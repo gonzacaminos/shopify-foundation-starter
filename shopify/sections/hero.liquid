@@ -1,0 +1,65 @@
+{% assign image = section.settings.image %}
+
+<section class="hero bg-slate-300">
+    <div class="c-container flex flex-col-reverse md:flex-row justify-between md:px-16 md:pr-0 wide:pr-16 bg-slate-200">
+        <div class="heading bg-slate-300 px-2 py-4 flex flex-col items-baseline justify-center">
+            {% if section.settings.headline != blank %}
+                <h1 class="mb-5">{{section.settings.headline}}</h1>
+            {% endif %}
+            {% if section.settings.text != blank %}
+                <div class="mb-5">{{section.settings.text}}</div>
+            {% endif %}
+            {% if section.settings.button-url != blank %}
+                <a class="px-8 py-2 text-white bg-slate-800" href="{{section.settings.button-url}}">{{section.settings.button-text}}</a>
+            {% endif %}
+        </div>
+        {% if image != blank %}
+            <div class="image">
+                <img src="{{ image | img_url: 'master'}}" class="w-full">
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "class": "hero-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:common.image"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "t:common.headline",
+      "default": "Headline"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "t:common.text",
+      "default": "Body copy that highlights the company's values."
+    },
+    {
+      "type": "url",
+      "id": "button-url",
+      "label": "t:common.button.url"
+    },
+    {
+      "type": "text",
+      "id": "button-text",
+      "label": "t:common.button.text",
+      "default": "Shop Now"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero section",
+      "category": "Image"
+    }
+  ]
+}
+{% endschema %}
