@@ -1,165 +1,79 @@
 <div class="flex flex-wrap md:flex-nowrap md:gap-x-6">
   <div class="w-full md:w-1/2 mb-4 sm:mb-6">
-    <label
-      for="ContactFormFirstName_{{ form.id }}"
-      class="block"
-    >
+    <label for="ContactFormFirstName_{{ form.id }}" class="block mb-2">
       {{ 'form.first_name' | t }}*
     </label>
 
-    <input
-      type="text"
-      name="address[first_name]"
-      id="ContactFormFirstName_{{ form.id }}"
-      value="{{ form.first_name }}"
-      class="w-full"
-      required
-    >
+    <input type="text" name="address[first_name]" id="ContactFormFirstName_{{ form.id }}" value="{{ form.first_name }}" class="w-full border px-2" required>
   </div>
 
   <div class="w-full md:w-1/2 mb-4 sm:mb-6">
-    <label
-      for="AddressLastName_{{ form.id }}"
-      class="block"
-    >
+    <label for="AddressLastName_{{ form.id }}" class="block mb-2">
       {{ 'form.last_name' | t }}*
     </label>
 
-    <input
-      type="text"
-      name="address[last_name]"
-      id="AddressLastName_{{ form.id }}"
-      value="{{ form.last_name }}"
-      class="w-full"
-      required
-    >
+    <input type="text" name="address[last_name]" id="AddressLastName_{{ form.id }}" value="{{ form.last_name }}" class="w-full border px-2" required>
   </div>
 </div>
 
 <div class="mb-4 sm:mb-6">
-  <label
-    for="AddressCompany_{{ form.id }}"
-    class="block"
-  >
+  <label for="AddressCompany_{{ form.id }}" class="block mb-2">
     {{ 'form.company' | t }}
   </label>
 
-  <input
-    type="text"
-    name="address[company]"
-    id="AddressCompany_{{ form.id }}"
-    value="{{ form.company }}"
-    class="w-full"
-  >
+  <input type="text" name="address[company]" id="AddressCompany_{{ form.id }}" value="{{ form.company }}" class="w-full border px-2">
 </div>
 
 <div class="mb-4 sm:mb-6">
-  <label
-    for="AddressAddress1_{{ form.id }}"
-    class="block"
-  >
+  <label for="AddressAddress1_{{ form.id }}" class="block mb-2">
     {{ 'form.address' | t }}*
   </label>
 
-  <input
-    type="text"
-    name="address[address1]"
-    id="AddressAddress1_{{ form.id }}"
-    value="{{ form.address1 }}"
-    class="w-full"
-    required
-  >
+  <input type="text" name="address[address1]" id="AddressAddress1_{{ form.id }}" value="{{ form.address1 }}" class="w-full border px-2" required>
 </div>
 
 <div class="mb-4 sm:mb-6">
-  <label
-    for="AddressAddress2_{{ form.id }}"
-    class="block"
-  >
+  <label for="AddressAddress2_{{ form.id }}" class="block mb-2">
     {{ 'form.apartment' | t }}
   </label>
 
-  <input
-    type="text"
-    name="address[address2]"
-    id="AddressAddress2_{{ form.id }}"
-    value="{{ form.address2 }}"
-    class="w-full"
-  >
+  <input type="text" name="address[address2]" id="AddressAddress2_{{ form.id }}" value="{{ form.address2 }}" class="w-full border px-2">
 </div>
 
 <div class="flex flex-wrap md:flex-nowrap md:gap-x-6">
   <div class="w-full md:w-1/2 mb-4 sm:mb-6">
-    <label
-      for="AddressCity_{{ form.id }}"
-      class="block"
-    >
+    <label for="AddressCity_{{ form.id }}" class="block mb-2">
       {{ 'form.city' | t }}*
     </label>
 
-    <input
-      type="text"
-      name="address[city]"
-      id="AddressCity_{{ form.id }}"
-      value="{{ form.city }}"
-      class="w-full"
-      required
-    >
+    <input type="text" name="address[city]" id="AddressCity_{{ form.id }}" value="{{ form.city }}" class="w-full border px-2" required>
   </div>
 
   <div class="w-full md:w-1/2 mb-4 sm:mb-6">
-    <label
-      for="AddressCountry_{{ form.id }}"
-      class="block"
-    >
+    <label for="AddressCountry_{{ form.id }}" class="block mb-2">
       {{ 'form.country' | t }}*
     </label>
 
-    <select
-      v-select-option="'{{ form.country }}'"
-      name="address[country]"
-      id="AddressCountry_{{ form.id }}"
-      class="w-full h-12 border px-3 py-2"
-      required
-    >
+    <select v-select-option="'{{ form.country }}'" name="address[country]" id="AddressCountry_{{ form.id }}" class="w-full h-12 border px-3 py-2" required>
       {{ country_option_tags }}
     </select>
   </div>
 </div>
 
 <div class="mb-4 sm:mb-6">
-  <label
-    for="AddressZip_{{ form.id }}"
-    class="block"
-  >
+  <label for="AddressZip_{{ form.id }}" class="block mb-2">
     {{ 'form.zip_code' | t }}*
   </label>
 
-  <input
-    type="number"
-    name="address[zip]"
-    id="AddressZip_{{ form.id }}"
-    value="{{ form.zip }}"
-    class="w-full"
-    required
-  >
+  <input type="text" name="address[zip]" id="AddressZip_{{ form.id }}" value="{{ form.zip }}" class="w-full border px-2" required>
 </div>
 
 <div class="mb-6 sm:mb-10">
-  <label
-    for="AddressPhone_{{ form.id }}"
-    class="block"
-  >
+  <label for="AddressPhone_{{ form.id }}" class="block mb-2">
     {{ 'form.phone' | t }}
   </label>
 
-  <input
-    type="tel"
-    name="address[phone]"
-    id="AddressPhone_{{ form.id }}"
-    value="{{ form.phone }}"
-    class="w-full"
-  >
+  <input type="tel" name="address[phone]" id="AddressPhone_{{ form.id }}" value="{{ form.phone }}" class="w-full border px-2">
 </div>
 
 <div class="mb-4 sm:mb-6">
@@ -180,10 +94,7 @@
       {% endif %}
     </button>
 
-    <button
-      @click.prevent="cancelEdit"
-      class="button button-secondary"
-    >
+    <button @click="closeForms($event)" class="button button-secondary" type="button">
       {{ 'action.cancel' | t }}
     </button>
   </div>
