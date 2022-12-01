@@ -73,3 +73,10 @@ const swiper_scroll = new Swiper(".swiper-scroll", {
     prevEl: ".swiper-button-prev.scroll",
   }
 });
+
+new Ajaxinate({
+  container: '#AjaxinateContainer',
+  pagination: '#AjaxinatePagination',
+  loadingText: 'Loading more...',
+  method: 'click'
+});
