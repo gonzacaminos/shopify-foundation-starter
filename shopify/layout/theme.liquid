@@ -41,16 +41,11 @@
         {% section 'layout-announcement-bar' %}
         {% section 'layout-header' %}
 
-        <main
-          id="main"
-          role="main"
-          class="flex-1 pt-8 {% if request.page_type == 'index' %}md:pt-12{% else %}md:pt-20 pb-16 md:pb-32{% endif %}"
-        >
+        <main id="main" role="main" class="flex-1 pt-8 {% if request.page_type == 'index' %}md:pt-12{% else %}md:pt-20 pb-16 md:pb-32{% endif %}">
           {{ content_for_layout }}
         </main>
 
         {% section 'layout-footer' %}
-        {% section 'layout-mobile-navigation' %}
 
         <transition name="slide-mobile-menu">
           {% render 'layout-mobile-menu' %}
