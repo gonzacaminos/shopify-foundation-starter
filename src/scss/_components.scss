@@ -1,0 +1,32 @@
+details.accordion {
+    --summary-icon: '+';
+    @apply mb-6 text-base;
+    summary {
+        @apply pb-2 uppercase cursor-pointer text-secondary font-black flex items-center justify-between w-full border-b-2 border-secondary;
+        &::marker {
+            display: none;
+            content: "";
+        }
+
+        &::after {
+            @apply pl-2 font-black;
+            content: var(--summary-icon);
+        }
+    }
+
+    &[open] {
+        --summary-icon: '-';
+    }
+
+    .accordion-content {
+        @apply pl-5 py-4;
+
+        label {
+            @apply flex items-center;
+            input[type="checkbox"] {
+                @apply mr-3;
+            }
+        }
+
+    }
+}

@@ -10,6 +10,7 @@
 @import "~swiper/css/navigation";
 @import "~swiper/css/pagination";
 @import "~swiper/css/scrollbar";
+@import "~glightbox/dist/css/glightbox.min";
 
 //functions
 @import "functions/_rem";
@@ -17,3 +18,5 @@
 @import "_fonts";
 @import "_globals";
 @import "cart";
+@import "filters"; 
+@import "components";
