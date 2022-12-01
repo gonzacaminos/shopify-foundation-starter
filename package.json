@@ -23,7 +23,10 @@
   },
   "dependencies": {
     "@dango-digital/gocart": "^1.0.9",
+    "ajaxinate": "^3.0.1",
     "alpinejs": "^3.9.1",
+    "glightbox": "^3.2.0",
+    "swiper": "^8.4.5",
     "tailwindcss": "^3.0.2"
   },
   "devDependencies": {
