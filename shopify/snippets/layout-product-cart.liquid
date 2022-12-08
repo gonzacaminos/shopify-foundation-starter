@@ -1,21 +1,14 @@
-<div class="{{ class | default: '' }}" style="{{ style | default: '' }}">
+<div class="go-cart-item__single regular_cart {{ class | default: '' }}" style="{{ style | default: '' }}" data-line="{{line_id}}">
   <div class="md:grid grid-cols-8 gap-4">
     <div class="col-span-5 flex flex-wrap gap-2 md:gap-6 mb-4 md:mb-0">
       <a href="{{ product.url | within: collections.all }}" class="block w-full md:w-32 h-64 md:h-32">
-        <img
-          sizes="
-            (min-width: 768px) 275px,
-            400px
-          "
-          srcset="
-            {{ product | img_url: '275x' }} 275w,
-            {{ product | img_url: '400x' }} 400w
-          "
-          src="{{ product | img_url: '400x' }}"
-          alt="{{ product.title | escape }}"
-          loading="lazy"
-          class="w-full h-full object-cover object-center"
-        >
+        <img sizes="
+                      (min-width: 768px) 275px,
+                      400px
+                    " srcset="
+                      {{ product | img_url: '275x' }} 275w,
+                      {{ product | img_url: '400x' }} 400w
+                    " src="{{ product | img_url: '400x' }}" alt="{{ product.title | escape }}" loading="lazy" class="w-full h-full object-cover object-center">
       </a>
 
       <div class="flex flex-col py-2">
@@ -42,11 +35,15 @@
     </div>
 
     <div class="flex justify-between md:justify-end items-center">
-      <span class="md:hidden">{{ 'common.price' | t }}</span> {{ product.price | money }}
+      <span class="md:hidden">{{ 'common.price' | t }}</span>
+      {{ product.price | money }}
     </div>
 
     <div class="flex justify-between md:justify-end items-center">
-      <span class="md:hidden">{{ 'common.quantity' | t }}</span> x{{ product.quantity }}
+      <div class="go-cart-item__quantity !static">
+        <span class="go-cart-item__quantity-label"></span>
+        <input class="js-go-cart-quantity on_demand inline-block w-24 text-center border px-2 text-md" type="number" step="1" min="1" max="{{ product.product.selected_or_first_available_variant.inventory_quantity }}" name="quantity" value="{{ product.quantity }}" title="Quantity" class="input-text qty text" size="4" pattern="" inputmode="" data-price="{{ product.line_price}}">
+      </div>
     </div>
 
     <div class="flex justify-between md:justify-end items-center">
@@ -54,7 +51,8 @@
         {{ product.original_line_price | money }}
       {% endif %}
 
-      <span class="md:hidden">{{ 'common.total' | t }}</span> {{ product.line_price | money }}
+      <span class="md:hidden">{{ 'common.total' | t }}</span>
+      <span class="go-cart-item__price on_demand">{{ product.line_price | money }}</span>
 
       {% for discount in product.discounts %}
         {{ discount.title }}

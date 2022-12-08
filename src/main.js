@@ -3,7 +3,7 @@
  */
 import './scss/main.scss'
 import Alpine from 'alpinejs'
-import GoCart from '@dango-digital/gocart';
+import GoCart from '@lonelypixels/gocart';
 import Swiper, { Navigation, Pagination, Scrollbar } from 'swiper';
 import {Ajaxinate} from 'ajaxinate';
 import GLightbox from 'glightbox';
@@ -13,10 +13,10 @@ window.Alpine = Alpine
 Alpine.start()
 
 const goCartOptions = { 
-    cartHtml: "",
+    cartHtml: "whatever",
     labelRemove: "",
     labelQuantity: "", 
-    useDropdown: true
+    useDropdown: false
    }
    
 const goCart = new GoCart(goCartOptions);
