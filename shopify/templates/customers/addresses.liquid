@@ -1,10 +1,11 @@
 <div class="container max-w-screen-xl md:my-8" x-data="{
       isNewAddress: false,
-      toggleNewAddress(){ this.closeForms(); this.isNewAddress = !this.isNewAddress},
+      isAddressEditing: false,
+      toggleNewAddress(){ this.closeForms(); this.isNewAddress = !this.isNewAddress; this.isAddressEditing = false;},
       currentAddress: false,
-      editAddress(address){ this.closeForms(); this.currentAddress = address;},
+      editAddress(address){ this.closeForms(); this.currentAddress = address; this.isAddressEditing = true; },
       checkCurrentAddress(address) { return address == this.currentAddress; console.log(address == this.currentAddress, address,this.currentAddress)},
-      closeForms(e) { this.isNewAddress = false; this.currentAddress = false; }
+      closeForms(e) { this.isNewAddress = false; this.currentAddress = false; this.isAddressEditing = false;}
     }
     "><h1 class="text-2xl md:text-3xl font-bold text-center mb-4">
     {{ 'customer.addresses.title' | t }}
@@ -20,39 +21,43 @@
     <renderless-addresses-switch v-slot="{ visibleForm, currentlyEditedAddress, showForm, editAddress, cancelEdit }">
       <div>
         <div class="flex flex-col-reverse lg:grid lg:grid-cols-3 gap-4 md:gap-8">
-          {% comment %}
-            form - start
-          {% endcomment %}
+          {% comment %} form - start {% endcomment %}
           <div class="address-form lg:col-span-2 pt-4 lg:pt-0">
             <div class="text-lg lg:text-xl font-bold mb-6">
               <transition name="slide-from-left">
-                <div x-show="isNewAddress" key="new" x-cloak>
+                <div
+                  x-show="isNewAddress"
+                  key="new"
+                  x-cloak>
                   {{ 'customer.addresses.add_new_address' | t }}
                 </div>
 
-                <div x-show="!isNewAddress" key="edit" x-cloak>
+                <div
+                  x-show="!isNewAddress"
+                  key="edit"
+                  x-cloak>
                   {{ 'customer.addresses.edit_address' | t }}
                 </div>
               </transition>
             </div>
 
             <transition-group name="form-fade">
-              {% comment %}
-                add button - start
-              {% endcomment %}
-              <div x-show="!isNewAddress" key="button-add-new-address" class="h-64 flex justify-center items-center border border-dashed rounded-sm p-4 sm:p-8">
+              {% comment %} add button - start {% endcomment %}
+              <div
+                x-show="!isNewAddress && !isAddressEditing"
+                key="button-add-new-address"
+                class="h-64 flex justify-center items-center border border-dashed rounded-sm p-4 sm:p-8">
                 <button @click="toggleNewAddress()" class="button button-primary">
                   {{ 'action.add_new_address' | t }}
                 </button>
               </div>
-              {% comment %}
-                add button - end
-              {% endcomment %}
+              {% comment %} add button - end {% endcomment %}
 
-              {% comment %}
-                forms - start
-              {% endcomment %}
-              <div x-show="currentAddress || isNewAddress" class="border overflow-hidden p-6 md:p-8 mb-10" x-cloak>
+              {% comment %} forms - start {% endcomment %}
+              <div
+                x-show="currentAddress || isNewAddress"
+                class="border overflow-hidden p-6 md:p-8 mb-10"
+                x-cloak>
                 <transition-group name="slide-from-left">
                   <div x-show="isNewAddress" key="form-new">
                     {% form 'customer_address', customer.new_address %}
@@ -69,8 +74,7 @@
                           {% render 'layout-message'
                            , type: 'success'
                            text: translation_response
-                           class: 'mb-8'
-                           %}
+                           class: 'mb-8' %}
                         {% endif %}
 
                         {% render 'layout-account-address-form', form: form %}
@@ -79,18 +83,12 @@
                   {% endfor %}
                 </transition-group>
               </div>
-              {% comment %}
-                forms - end
-              {% endcomment %}
+              {% comment %} forms - end {% endcomment %}
             </transition-group>
           </div>
-          {% comment %}
-            form - end
-          {% endcomment %}
+          {% comment %} form - end {% endcomment %}
 
-          {% comment %}
-            addresses - start
-          {% endcomment %}
+          {% comment %} addresses - start {% endcomment %}
           <div class="col-span-1">
             <div class="text-lg lg:text-xl font-bold mb-6">
               {{ 'customer.account.addresses' | t }}
@@ -114,8 +112,14 @@
                       {{ 'action.edit' | t }}
                     </button>
 
-                    <form method="post" action="/account/addresses/{{ address.id }}" class="w-1/2">
-                      <input type="hidden" name="_method" value="delete"/>
+                    <form
+                      method="post"
+                      action="/account/addresses/{{ address.id }}"
+                      class="w-1/2">
+                      <input
+                        type="hidden"
+                        name="_method"
+                        value="delete" />
 
                       <button class="button button-secondary w-full">
                         {{ 'action.delete' | t }}
@@ -126,9 +130,7 @@
               {% endfor %}
             </div>
           </div>
-          {% comment %}
-            addresses - end
-          {% endcomment %}
+          {% comment %} addresses - end {% endcomment %}
         </div>
       </div>
     </renderless-addresses-switch>
