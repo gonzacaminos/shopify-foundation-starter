@@ -36,6 +36,10 @@
             @apply overflow-y-auto;
         }
 
+        &__footer {
+            padding-top: 10px;
+        }
+
     }
 
     &__drawer {
@@ -44,7 +48,9 @@
                 display: none;
             }
         }
+
+        &.is-open {
+            z-index: 999;
+        }
     }
 }
-
-

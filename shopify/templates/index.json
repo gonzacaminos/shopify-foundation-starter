@@ -14,7 +14,7 @@
       "settings": {
         "headline": "Selected products",
         "collection_featured": "",
-        "collection_products_limit": "4"
+        "collection_products_limit": 4
       }
     },
     "section-banner": {

@@ -27,7 +27,10 @@ module.exports = {
        
       },
       colors: {
-        "cyan" : "#BC2EFF",
+        "accent" : {
+          "DEFAULT": "#FFC80B",
+          "darker" : "#e2ab29"
+        },
         "primary" : "#BC2EFF",
         "secondary" : "#6830CC"
       },

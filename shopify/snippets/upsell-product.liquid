@@ -1,22 +1,31 @@
-<div class="grid grid-cols-12 items-center bg-gray-100 p-4">
-    <div class="col-span-2">
-        <img class="" src="{{ product_ref.featured_image | product_img_url: 'x40' }}" />
-    </div>
-    <div class="col-span-7">
-        <a href="{{ product_ref.url}}" class="text-xs font-normal"> {{ product_ref.title | truncate: 30 }} </a>
-    </div>
-    <div class="col-span-3">
-        <form action="/cart/add" method="post" enctype="multipart/form-data" id="add-to-cart-{{ product.handle }}-{{ collection.handle }}-{{ section.id }}">
-        <input
-            name="id"
-            type="hidden"
-            value="{{ product_ref.selected_or_first_available_variant.id }}"
-            readonly
-        >
-            <button name="add" class="button button-secondary text-xs w-full h-12 js-go-cart-add-to-cart" data-id="{{product_ref.selected_or_first_available_variant.id}}" @click="$refs.item_{{product_ref.selected_or_first_available_variant.id}}.remove()">
-                {{ 'action.add_to_cart' | t }}
-            </button>
-        </form>
-    </div>
+<div class="bg-gray-100 min-w-[110px] p-4">
+  <div class="">
+    <img class="" src="{{ product_ref.featured_image | product_img_url: 'x80' }}" />
+  </div>
+  <div class="max-h-[40px] overflow-hidden leading-tight">
+    <a href="{{ product_ref.url}}" class="text-xs font-normal">
+      {{ product_ref.title | truncate: 30 }}
+    </a>
+  </div>
+  {% assign current_variant = product_ref.selected_or_first_available_variant %}
+  <div class="mt-4">
+    <form
+      action="/cart/add"
+      method="post"
+      enctype="multipart/form-data"
+      id="add-to-cart-{{ product_ref.handle }}-{{ current_variant.id }}">
+      <input
+        name="id"
+        type="hidden"
+        value="{{ current_variant.id }}"
+        readonly>
+      <button
+        name="add"
+        class="button button-tiny text-xs w-full h-12 js-go-cart-add-to-cart"
+        data-id="{{current_variant.id}}"
+        @click="addItem({{current_variant.id}})">
+        Add - {{ current_variant.price | money }}
+      </button>
+    </form>
+  </div>
 </div>
-

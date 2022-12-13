@@ -1,0 +1,12 @@
+.button {
+    @apply text-base inline-block;
+
+    &-primary {
+        @apply bg-accent hover:bg-black px-10 md:px-20 py-4;
+    }
+
+    &-tiny {
+        @apply text-xs font-bold border-2 border-black hover:bg-black hover:text-white;
+    }
+
+}  
