@@ -1,0 +1,15 @@
+.shopify-challenge{
+
+    &__container {
+        @apply py-20 space-y-10 px-10;
+        .g-recaptcha {
+            @apply pb-20;
+        }
+    }
+
+    &__button {
+        @extend .button-primary;
+        @apply mt-20;
+    }
+
+}
