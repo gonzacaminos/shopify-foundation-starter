@@ -70,7 +70,7 @@
         <!--go cart drawer close-->
         <div class="go-cart-drawer__header w-full">
 
-            <h3 class="text-2xl font-normal">Your cart</h3>
+            <h3 class="text-2xl font-bold">{{section.settings.cart_heading}}</h3>
             <div class="go-cart-drawer__close js-go-cart-drawer-close">
 
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
@@ -88,66 +88,9 @@
         </div>
         <!--end go cart drawer content-->
 
-        <div class="px-12 py-2">
-            {% assign cart_items = null %}
-            {% assign collections_list = null %}
-            {% assign max_products = 6 %}
-            {% assign max_products_per_collection = 3 %}
-            {% assign shown_products = 0 %}
-            {% assign upsell_list = null %}
-
-
-            {% for line_item in cart.items %}
-                {% assign cart_items = cart_items | append: ',' | append: line_item.product.handle %}
-                {% for _collection in line_item.product.collections %}
-                    {% assign collections_list = collections_list | append: ',' | append: _collection.handle %}
-                {% endfor %}
-                
-            {% endfor %}
-
-            {% assign cart_items = cart_items | split: ',' %}
-            {% assign collections_list = collections_list | split: ',' | uniq | compact %}
-
-            {% for _collection in collections_list %}
-               
-                {% assign _collection_object = collections[_collection] %}
-                {% assign included_products = 0 %}
-                {% for _product in _collection_object.products %}
-                    
-                    {% unless cart_items contains _product.handle %}
-
-                        {% if _product.available %}
-
-                            {% assign upsell_list = _product.handle | append: ',' | append: upsell_list %}
-                            {% assign included_products = included_products | plus: 1 %}
-
-                        {% endif %}
-                     
-
-                    {% endunless  %}
-
-                {% if included_products >= max_products_per_collection %} {% break %} {% endif %}
-
-                {% endfor %}
-
-            {% endfor %}
-
-            {% assign upsell_list = upsell_list | split: ',' | uniq | compact %}
-
-            {% if upsell_list != blank %}
-
-                <ul class="go-cart-upsell-list space-x-2 flex overflow-x-auto" x-data="{items: [], addItem(_item){ this.items.push(_item)} }">
-                    {% for product_handle in upsell_list %}
-                        {% assign product_ref = all_products[product_handle] %}
-                            {% assign shown_products = shown_products | plus: 1 %}
-                                <li id="{{product_ref.selected_or_first_available_variant.id}}" x-show="!items.includes({{product_ref.selected_or_first_available_variant.id}})" x-ref="item_{{product_ref.selected_or_first_available_variant.id}}">
-                                    {% render 'upsell-product', product_ref: product_ref%}
-                                </li>
-                            {% if shown_products >= max_products %} {% break %} {% endif %}
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        </div>
+        {% if section.settings.enable_upsells %}
+            {% render 'upsells', items: cart.items, section: section %}
+        {% endif %}
 
         <!--go cart drawer subtotal-->
         <div class="go-cart-drawer__subtotal">
@@ -160,7 +103,7 @@
         <div class="go-cart-drawer__footer js-go-cart-drawer-footer">
 
             <a href="/checkout/" class="go-cart__button">
-               Checkout
+               {{section.settings.checkout_button_label}}
             </a>
 
         </div>
@@ -175,3 +118,63 @@
 <div class="go-cart__overlay js-go-cart-overlay">
 </div>
 <!--end go cart overlay-->
+
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Cart title",
+      "id": "cart_heading",
+      "default": "Your cart"
+    },
+    {
+      "type": "checkbox",
+      "label": "Enable upsells",
+      "id": "enable_upsells",
+      "default": true
+    },
+    {
+      "type": "text",
+      "label": "Upsells title",
+      "id": "upsells_title",
+      "placeholder": "Upsells title",
+      "default": "How about these?"
+    },
+    {
+      "type": "range",
+      "label": "Max upsells to show",
+      "id": "max_upsell_items",
+      "step": 1,
+      "min": 2,
+      "max": 10,
+      "unit": "it",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "label": "Max upsells to show per collection",
+      "id": "max_upsell_per_collection",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "unit": "it",
+      "default": 3
+    },
+    {
+      "type": "text",
+      "label": "Checkout button label",
+      "id": "checkout_button_label",
+      "placeholder": "Checkout button label",
+      "default": "Checkout"
+    },
+    {
+        "type": "collection",
+        "id": "collection_featured",
+        "label": "Collection to use as upsell",
+        "info": "If this is empty the products will be related to the products in cart"
+    }
+  ]
+}
+{% endschema %}

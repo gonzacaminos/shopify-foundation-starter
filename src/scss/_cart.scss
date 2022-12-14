@@ -1,5 +1,6 @@
 .go-cart{
 
+
     &-item {
         &__remove{
             text-indent: -9999px;
@@ -9,10 +10,17 @@
             
         }
 
-        &__info footer{
-            @apply mt-4 flex;
+
+
+        &__info {
+            @apply flex flex-col;
+            
+            footer{
+                @apply mt-auto flex;
+            }
+
         }
-        
+
         &__quantity {
             bottom: unset;
             right: 0;
@@ -32,8 +40,9 @@
         }
 
         &__content {
-            height: calc(100% - 400px);
+            height: calc(100% - 440px);
             @apply overflow-y-auto;
+            @extend .custom-scroll-bar;
         }
 
         &__footer {

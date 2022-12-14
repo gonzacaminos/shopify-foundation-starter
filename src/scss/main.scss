@@ -15,8 +15,9 @@
 //functions
 @import "functions/_rem";
 
-@import "_fonts";
-@import "_globals";
+@import "fonts";
+@import "globals";
+@import "scrollbar";
 @import "cart";
 @import "filters"; 
 @import "components";
