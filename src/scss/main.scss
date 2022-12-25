@@ -15,6 +15,17 @@
 //functions
 @import "functions/_rem";
 
+@layer components {
+  .c-container {
+    @apply w-full max-w-[1280px] mx-auto;
+  }
+
+  .c-container-padded {
+    @extend .c-container;
+    @apply px-8 xl:px-0;
+  }  
+}
+
 @import "fonts";
 @import "globals";
 @import "scrollbar";

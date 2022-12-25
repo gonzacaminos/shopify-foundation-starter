@@ -1,10 +1,10 @@
 {% assign current_variant = product.selected_or_first_available_variant %}
 {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
 
-<div class="container max-w-screen-xl text-small mt-10 md:mt-0 mb-10">
+<div class="c-container-padded text-small mt-10 md:mt-0 mb-10">
   {% render 'breadcrumbs' %}
 </div>
-<div class="container max-w-screen-xl grid md:grid-cols-2 gap-16" x-data="{
+<div class="c-container-padded grid md:grid-cols-2 gap-16" x-data="{
                     currentImage: '{{ featured_image | img_url: '750x' }}',
                     currentPrice: '{{ current_variant.price | money }}',
                     currentTitle: '{{current_variant.title}}',
