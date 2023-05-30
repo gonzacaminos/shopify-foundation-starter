@@ -3,7 +3,7 @@
     <img class="" src="{{ product_ref.featured_image | product_img_url: 'x80' }}" />
   </div>
   <div class="max-h-[40px] overflow-hidden mt-2 leading-4">
-    <a href="{{ product_ref.url}}" class="text-xs font-normal">
+    <a href="{{ product_ref.url }}" class="text-xs font-normal">
       {{ product_ref.title | truncate: 30 }}
     </a>
   </div>
@@ -22,8 +22,8 @@
       <button
         name="add"
         class="button button-tiny text-xs w-full h-12 js-go-cart-add-to-cart"
-        data-id="{{current_variant.id}}"
-        @click="addItem({{current_variant.id}})">
+        data-id="{{ current_variant.id }}"
+        @click="addItem({{ current_variant.id }})">
         Add - {{ current_variant.price | money }}
       </button>
     </form>

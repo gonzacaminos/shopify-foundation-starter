@@ -57,9 +57,9 @@
           {% assign product_ref = all_products[product_handle] %}
           {% assign shown_products = shown_products | plus: 1 %}
           <li
-            id="{{product_ref.selected_or_first_available_variant.id}}"
-            x-show="!items.includes({{product_ref.selected_or_first_available_variant.id}})"
-            x-ref="item_{{product_ref.selected_or_first_available_variant.id}}">
+            id="{{ product_ref.selected_or_first_available_variant.id }}"
+            x-show="!items.includes({{ product_ref.selected_or_first_available_variant.id }})"
+            x-ref="item_{{ product_ref.selected_or_first_available_variant.id }}">
             {% render 'upsell-product', product_ref: product_ref %}
           </li>
           {% if shown_products >= max_products %}

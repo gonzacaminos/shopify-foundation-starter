@@ -28,10 +28,10 @@ x-data="{
         class="header-brand mx-auto inline-block text-2xl lg:text-3xl font-bold ml-0">
         {% if section.settings.logo != blank %}
           {% if section.settings.logo_mobile != blank %}
-            <span class="md:hidden"> {{ section.settings.logo_mobile | img_url: 'master' | img_tag }} </span>
-            <span class="hidden md:inline-block"> {{ section.settings.logo | img_url: 'master' | img_tag }} </span>
+            <span class="md:hidden"> {{ section.settings.logo_mobile | image_url | img_tag }} </span>
+            <span class="hidden md:inline-block"> {{ section.settings.logo | image_url | img_tag }} </span>
           {% else %}
-            {{ section.settings.logo | img_url: 'master' | img_tag }}
+            {{ section.settings.logo | image_url | img_tag }}
           {% endif %}
         {% else %}
           {{ shop.name }}

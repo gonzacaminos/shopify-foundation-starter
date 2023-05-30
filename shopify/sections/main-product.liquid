@@ -5,11 +5,11 @@
   {% render 'breadcrumbs' %}
 </div>
 <div class="c-container-padded grid md:grid-cols-2 gap-16" x-data="{
-                    currentImage: '{{ featured_image | img_url: '750x' }}',
+                    currentImage: '{{ featured_image | image_url: width: 750 }}',
                     currentPrice: '{{ current_variant.price | money }}',
-                    currentTitle: '{{current_variant.title}}',
-                    variants: [ {% for variant in product.variants %} { id: '{{variant.id}}', price: '{{ variant.price | money }}', image: '{{ variant.featured_image.src | img_url: '750x' }}'},{%endfor%}],
-                    product: {{product.selected_or_first_available_variant.id}},
+                    currentTitle: '{{ current_variant.title }}',
+                    variants: [ {% for variant in product.variants %} { id: '{{ variant.id }}', price: '{{ variant.price | money }}', image: '{{ variant.featured_image.src | image_url: width: 750 }}'},{% endfor %}],
+                    product: {{ product.selected_or_first_available_variant.id }},
                     variantChange(){ let found = this.variants.find(obj => {
                       return obj.id === this.product
                     }); this.currentPrice = found.price; this.currentImage = found.image; },
@@ -22,16 +22,16 @@
       {% if product.has_only_default_variant %}
         <div class="md:col-span-2 space-y-4">
           {% for image in product.images %}
-            <link rel="preload" as="image" href="{{ image.src | img_url: '750x' }}">
+            <link rel="preload" as="image" href="{{ image.src | image_url: width: 750 }}">
 
-            <button class="w-full md:w-20 md:h-36 block p-4 bg-gray-750 toggleImage" data-url="{{ image.src | img_url: '750x' }}" data-alt="{{ image.alt | escape }}" @click="toggleImage('{{ image.src | img_url: '750x' }}')">
+            <button class="w-full md:w-20 md:h-36 block p-4 bg-gray-750 toggleImage" data-url="{{ image.src | image_url: width: 750 }}" data-alt="{{ image.alt | escape }}" @click="toggleImage('{{ image.src | img_url: '750x' }}')">
               <img sizes="
                                                                     (min-width: 768px) 120px,
                                                                     400px
                                                                   " srcset="
-                                                                    {{ image.src | img_url: '80x' }} 80w,
-                                                                    {{ image.src | img_url: '400x' }} 400w
-                                                                  " src="{{ image.src | img_url: '400x' }}" alt="{{ image.alt | escape }}" loading="lazy" class="w-full h-full object-contain object-center pointer-events-none {% unless forloop.first %} glightbox {% endunless %}" data-title="" data-description="">
+                                                                    {{ image.src | image_url: width: 80 }} 80w,
+                                                                    {{ image.src | image_url: width: 400 }} 400w
+                                                                  " src="{{ image.src | image_url: width: 400 }}" alt="{{ image.alt | escape }}" loading="lazy" class="w-full h-full object-contain object-center pointer-events-none {% unless forloop.first %} glightbox {% endunless %}" data-title="" data-description="">
             </button>
           {% endfor %}
         </div>
@@ -106,7 +106,7 @@
             </div>
           </summary>
           <div class="accordion-content">
-            {{section.settings.free_pickup_info}}
+            {{ section.settings.free_pickup_info }}
           </div>
         </details>
       {% endif %}
@@ -119,19 +119,20 @@
 {% endif %}
 
 {% schema %}
-  {
-    "name": "Product",
-    "class": "main-product-template",
-    "settings": [
-      {
-        "type": "richtext",
-        "label": "Shipping info",
-        "id": "shipping_info"
-      }, {
-        "type": "richtext",
-        "label": "Free pickup info",
-        "id": "free_pickup_info"
-      }
-    ]
-  }
+{
+  "name": "Product",
+  "class": "main-product-template",
+  "settings": [
+    {
+      "type": "richtext",
+      "label": "Shipping info",
+      "id": "shipping_info"
+    },
+    {
+      "type": "richtext",
+      "label": "Free pickup info",
+      "id": "free_pickup_info"
+    }
+  ]
+}
 {% endschema %}

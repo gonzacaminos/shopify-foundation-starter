@@ -1,15 +1,15 @@
 <section class="c-container mt-8">
     {% if section.settings.headline != blank %}
-        <h2 class="px-2 md:px-0 mb-16 font-normal">{{section.settings.headline}}</h2>
+        <h2 class="px-2 md:px-0 mb-16 font-normal">{{ section.settings.headline }}</h2>
     {% endif %}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 wide:gap-8 py-4">
         {% for block in section.blocks %}
             <div>
                 {% render 'image-element', image: block.settings.column_image %}
-                <p class="mb-2.5 mt-9">{{block.settings.column_title}}</p>
-                <div class="mb-6">{{block.settings.column_text}}</div>
+                <p class="mb-2.5 mt-9">{{ block.settings.column_title }}</p>
+                <div class="mb-6">{{ block.settings.column_text }}</div>
                 {% if block.settings.column_button_url != blank %}
-                    <a class="border rounded tracking-widest py-2.5 px-5" href="{{block.settings.column_button_url}}">{{block.settings.column_button_label}}</a>
+                    <a class="border rounded tracking-widest py-2.5 px-5" href="{{ block.settings.column_button_url }}">{{ block.settings.column_button_label }}</a>
                 {% endif %}
             </div>
         {% endfor %}
@@ -18,50 +18,50 @@
 
 {% schema %}
 {
-    "name": "Columns with text",
-    "class": "columns-with-text",
-    "settings": [
+  "name": "Columns with text",
+  "class": "columns-with-text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "t:common.headline",
+      "default": "Top Categories"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Column",
+      "limit": 3,
+      "settings": [
         {
-            "type": "text",
-            "id": "headline",
-            "label": "t:common.headline",
-            "default": "Top Categories"
-        }
-    ],
-    "blocks": [
+          "type": "image_picker",
+          "id": "column_image",
+          "label": "Column image"
+        },
         {
-            "type": "text",
-            "name": "Column",
-            "limit": 3,
-            "settings": [
-                {
-                    "type": "image_picker",
-                    "id": "column_image",
-                    "label": "Column image"
-                },
-                {
-                    "type": "text",
-                    "id": "column_title",
-                    "label": "Column title"
-                },
-                {
-                    "type": "textarea",
-                    "id": "column_text",
-                    "label": "t:common.text"
-                },
-                {
-                    "type": "text",
-                    "id": "column_button_label",
-                    "label": "Button label"
-                },
-                {
-                    "type": "url",
-                    "id": "column_button_url",
-                    "label": "Button url"
-                }
-            ]
+          "type": "text",
+          "id": "column_title",
+          "label": "Column title"
+        },
+        {
+          "type": "textarea",
+          "id": "column_text",
+          "label": "t:common.text"
+        },
+        {
+          "type": "text",
+          "id": "column_button_label",
+          "label": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "column_button_url",
+          "label": "Button url"
         }
-    ],
+      ]
+    }
+  ],
   "presets": [
     {
       "name": "Columns with text",

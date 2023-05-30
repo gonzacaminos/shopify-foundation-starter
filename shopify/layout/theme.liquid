@@ -34,7 +34,7 @@
     {{ content_for_header }}
   </head>
 
-  <body class="min-h-screen page-{{request.page_type}}">
+  <body class="min-h-screen page-{{ request.page_type }}">
     <div id="app" class="min-h-screen flex flex-col font-sans">
       {% section 'layout-announcement-bar' %}
       {% section 'layout-header' %}
@@ -42,7 +42,7 @@
       <main
         id="main"
         role="main"
-        class="flex-1 {% if request.page_type == 'index' or  request.page_type == 'collection'%}md:pt-0{% else %}md:pt-20{% endif %}">
+        class="flex-1 {% if request.page_type == 'index' or  request.page_type == 'collection' %}md:pt-0{% else %}md:pt-20{% endif %}">
         {{ content_for_layout }}
       </main>
 

@@ -25,15 +25,15 @@ x-data="{
                     <li class="text-sm uppercase leading-tight items-center mb-10" data-item-title="{{ link.title | escape }}" >
                        
 
-                        <a class="flex items-center border-b transition duration-150" href="{{ link_url }}" {% if has_links %} @click='setActive({{forloop.index }})'{% endif %} x-bind:class="isActive == {{forloop.index }} ? 'border-black' : 'border-transparent'">
+                        <a class="flex items-center border-b transition duration-150" href="{{ link_url }}" {% if has_links %} @click='setActive({{  forloop.index }})'{% endif %} x-bind:class="isActive == {{forloop.index }} ? 'border-black' : 'border-transparent'">
                             {{- link.title -}}
                             {%- if has_links -%}
-                                <span class="ml-2 mb-1 transform" x-bind:class="isActive == {{forloop.index }} ? 'rotate-180' : ''"> {% render 'icon-chevron-down' %}</span>
+                                <span class="ml-2 mb-1 transform" x-bind:class="isActive == {{ forloop.index }} ? 'rotate-180' : ''"> {% render 'icon-chevron-down' %}</span>
                             {%- endif -%}
                         </a>
                        
                             {%- if has_links -%}
-                                <ul x-cloak x-transition x-show='isActive == {{forloop.index }}' class="pt-4 pl-4">
+                                <ul x-cloak x-transition x-show='isActive == {{ forloop.index }}' class="pt-4 pl-4">
                                     {% for sub_link in link.links %}
                                         <li>
                                             <a class="mb-8 flex items-center border-btransition duration-150 {% if link.active %}border-black{% else %}border-transparent hover:border-black{% endif %}" href="{{ sub_link.url }}">

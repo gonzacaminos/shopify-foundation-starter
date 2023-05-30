@@ -1,14 +1,14 @@
-{%- if links !=  blank -%}
+{%- if links != blank -%}
     <div class="space-y-4">
-        <p>{{title}}</p>
-        <div class="{% if links.links.size > 6 %} grid grid-cols-2 {%endif%}">
-            {% for link in links.links%}
-            <a class="block font-normal" href="{{link.url}}">
+        <p>{{ title }}</p>
+        <div class="{% if links.links.size > 6 %} grid grid-cols-2 {% endif %}">
+            {% for link in links.links %}
+            <a class="block font-normal" href="{{ link.url }}">
                 {{ link.title }}
             </a>
         {% endfor %}
         </div>
-        <a class="block underline" href="{{collection_url}}">{{collection_url_title}}</a>
+        <a class="block underline" href="{{ collection_url }}">{{ collection_url_title }}</a>
     </div>
 
    

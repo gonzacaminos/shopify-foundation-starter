@@ -1,7 +1,7 @@
 
-{%- if product !=  blank or title != blank-%}
+{%- if product != blank or title != blank -%}
     {% liquid
-        if product !=  blank
+        if product != blank
             assign title = product.title
             assign image = product.featured_image
             assign url = product.url
@@ -13,9 +13,9 @@
     %}
 
     <div class="text-center">
-        <a href="{{url}}">
-            <img class="mx-auto" src="{{image | img_url: 'x150'}}" />
+        <a href="{{ url }}">
+            <img class="mx-auto" src="{{ image | image_url: height: 150 }}" />
         </a>
-        <p class="mt-4">{{title}}</p>
+        <p class="mt-4">{{ title }}</p>
     </div>
 {%- endif -%}

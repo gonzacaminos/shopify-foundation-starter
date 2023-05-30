@@ -8,7 +8,7 @@
           <label class="mb-4 block font-bold text-small">Select your product</label>
           <select name="id" x-model="product" class="block py-4 px-6 mb-10" @change="variantChange">
             {% for variant in product.variants %}
-              <option value="{{ variant.id }}" @click="variantChange('{{variant.title}}', '{{ variant.price | money }}', '{{variant.featured_image}}')" {% if variant == current_variant %}selected="selected"{% endif %}>
+              <option value="{{ variant.id }}" @click="variantChange('{{ variant.title }}', '{{ variant.price | money }}', '{{ variant.featured_image }}')" {% if variant == current_variant %}selected="selected"{% endif %}>
                 {{ variant.title }} - {{ variant.price | money }}
               </option>
             {% endfor %}
@@ -40,7 +40,7 @@
 
       {% endif %}
       <div>
-        <button name="add" class="button button-primary add-to-cart block js-go-cart-add-to-cart" data-id="{{current_variant.id}}">
+        <button name="add" class="button button-primary add-to-cart block js-go-cart-add-to-cart" data-id="{{ current_variant.id }}">
           {{ 'action.add_to_cart' | t }}
         </button>
       </div>

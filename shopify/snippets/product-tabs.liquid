@@ -16,15 +16,15 @@
     }"><div class="c-container-padded pb-20 space-y-16 md:space-y-0">
     <header class="text-base justify-center flex space-x-10 mb-20">
       {% assign link_class = 'font-bold md:border-t-8 pt-5 md:pt-10 md:px-20' %}
-      <button class="hidden md:block {{link_class}}" @click="switchTab(1)" :class="activeTab == 1 ? 'border-secondary' : 'border-white'">
+      <button class="hidden md:block {{ link_class }}" @click="switchTab(1)" :class="activeTab == 1 ? 'border-secondary' : 'border-white'">
         DESCRIPTION
       </button>
     </header>
     <div class="md:grid md:grid-cols-2 md:justify-items-center space-y-8 md:space-y-0" x-cloak x-show="showTab(1)">
-      <h4 class="md:hidden {{link_class}}">DESCRIPTION</h4>
-      <img src="{{ product.featured_image | img_url: '600x' }}" loading="lazy" class="object-cover object-center">
+      <h4 class="md:hidden {{ link_class }}">DESCRIPTION</h4>
+      <img src="{{ product.featured_image | image_url: width: 600 }}" loading="lazy" class="object-cover object-center">
       <div class="md:px-10 text-small-heading">
-        {{ product. description}}
+        {{ product. description }}
       </div>
     </div>
   </div>

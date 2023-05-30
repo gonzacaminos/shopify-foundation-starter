@@ -14,13 +14,13 @@
                           (min-width: 640px) 500px,
                           600px
                         " srcset="
-                          {{ image | img_url: '400x' }} 400w,
-                          {{ image | img_url: '500x' }} 500w,
-                          {{ image | img_url: '600x' }} 600w,
-                          {{ image | img_url: '700x' }} 700w,
-                          {{ image | img_url: '850x' }} 850w,
-                          {{ image | img_url: '1000x' }} 1000w
-                        " src="{{ image | img_url: '1000x' }}" alt="{{ image.alt }}" loading="lazy" class="w-full h-full object-cover object-center aspect-video"/>
+                          {{ image | image_url: width: 400 }} 400w,
+                          {{ image | image_url: width: 500 }} 500w,
+                          {{ image | image_url: width: 600 }} 600w,
+                          {{ image | image_url: width: 700 }} 700w,
+                          {{ image | image_url: width: 850 }} 850w,
+                          {{ image | image_url: width: 1000 }} 1000w
+                        " src="{{ image | image_url: width: 1000 }}" alt="{{ image.alt }}" loading="lazy" class="w-full h-full object-cover object-center aspect-video"/>
     <div class="container absolute inset-0 w-full h-full flex items-end justify-start">
       <h1 class="text-white uppercase text-2xl md:text-[80px] font-extrabold mb-6 md:mb-16 leading-none">
         {{ collection.title }}
@@ -34,7 +34,7 @@
     <div class="container">
       {% render 'layout-sort-bar', amount: amount class: 'my-8' %}
     </div>
-  {%endif%}
+  {% endif %}
 
   <div class="container py-10 lg:grid lg:grid-cols-6 lg:gap-x-16 lg:gap-y-">
     <div class="col-span-1 pr-5">
@@ -75,19 +75,20 @@
 
 
 {% schema %}
-  {
-    "name": "Collection",
-    "class": "main-collection-template",
-    "settings": [
-      {
-        "type": "image_picker",
-        "label": "Logo",
-        "id": "logo"
-      }, {
-        "type": "image_picker",
-        "label": "Background",
-        "id": "background"
-      }
-    ]
-  }
+{
+  "name": "Collection",
+  "class": "main-collection-template",
+  "settings": [
+    {
+      "type": "image_picker",
+      "label": "Logo",
+      "id": "logo"
+    },
+    {
+      "type": "image_picker",
+      "label": "Background",
+      "id": "background"
+    }
+  ]
+}
 {% endschema %}}
