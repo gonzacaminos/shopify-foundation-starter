@@ -14,7 +14,9 @@
 
     <div class="text-center">
         <a href="{{ url }}">
-            <img class="mx-auto" src="{{ image | image_url: height: 150 }}" />
+            {% if image %}
+                {{ image | image_url: height: 150 | image_tag: class: 'mx-auto', loading: 'lazy' }}
+            {% endif %}
         </a>
         <p class="mt-4">{{ title }}</p>
     </div>

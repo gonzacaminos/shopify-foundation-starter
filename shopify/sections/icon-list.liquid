@@ -5,7 +5,7 @@
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 wide:gap-8 py-4">
         {% for block in section.blocks %}
             <div class="flex flex-col items-center px-5">
-                <img src="{{ block.settings.item_svg | file_url }}" class="w-20 mb-4" alt="icon">
+                <img src="{{ block.settings.item_svg | file_url }}" class="w-20 mb-4" alt="icon" loading="lazy">
                 <div>{{ block.settings.item_text }}</div>
             </div>
         {% endfor %}

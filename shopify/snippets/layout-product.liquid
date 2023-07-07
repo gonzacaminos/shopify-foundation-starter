@@ -1,20 +1,9 @@
 <div class="{{ class | default: '' }}" style="{{ style | default: '' }}">
   <a href="{{ product.url | within: collection }}" class="block relative">
-    <img
-      sizes="
-        (min-width: 768px) 450px,
-        630px
-      "
-      srcset="
-        {{ product.featured_image.src | image_url: width: 450 }} 450w,
-        {{ product.featured_image.src | image_url: width: 630 }} 630w
-      "
-      src="{{ product.featured_image.src | image_url: width: 630 }}"
-      alt="{{ product.featured_image.alt | escape }}"
-      loading="lazy"
-      class="w-full h-80 sm:h-64 xl:h-80 2xl:max-h-96 object-cover object-center"
-    >
-
+    {% if product.featured_image %}
+       {{ product.featured_image | image_url: width: 630 | image_tag: class: 'w-full h-80 sm:h-64 xl:h-80 2xl:max-h-96 object-cover object-center', loading: 'lazy', sizes: '(max-width: 768px) 450px, 630px' }}
+    {% endif %}
+    
     {% if product.compare_at_price %}
       <div class="bg-red-500 text-white text-sm tracking-wider uppercase absolute top-0 left-0 px-2 py-1">
         {{ 'common.sale' | t }}

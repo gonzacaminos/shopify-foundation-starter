@@ -6,21 +6,10 @@
 
 <div class="layout_2">
   <div class="w-full max-h-40vh relative overflow-hidden">
-    <img sizes="
-                          (min-width: 1536px) 1000px,
-                          (min-width: 1280px) 850px,
-                          (min-width: 1024px) 700px,
-                          (min-width: 768px) 400px,
-                          (min-width: 640px) 500px,
-                          600px
-                        " srcset="
-                          {{ image | image_url: width: 400 }} 400w,
-                          {{ image | image_url: width: 500 }} 500w,
-                          {{ image | image_url: width: 600 }} 600w,
-                          {{ image | image_url: width: 700 }} 700w,
-                          {{ image | image_url: width: 850 }} 850w,
-                          {{ image | image_url: width: 1000 }} 1000w
-                        " src="{{ image | image_url: width: 1000 }}" alt="{{ image.alt }}" loading="lazy" class="w-full h-full object-cover object-center aspect-video"/>
+    {% if image %}
+      {{ image | image_url: width: 1000 | image_tag: class: 'w-full h-full object-cover object-center aspect-video', loading: 'lazy', sizes: '(min-width: 1536px) 1000px,(min-width: 1280px) 850px,(min-width: 1024px) 700px,(min-width: 768px) 400px,(min-width: 640px) 500px' }}
+    {% endif %}
+  
     <div class="container absolute inset-0 w-full h-full flex items-end justify-start">
       <h1 class="text-white uppercase text-2xl md:text-[80px] font-extrabold mb-6 md:mb-16 leading-none">
         {{ collection.title }}
@@ -91,4 +80,4 @@
     }
   ]
 }
-{% endschema %}}
+{% endschema %}

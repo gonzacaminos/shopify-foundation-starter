@@ -24,7 +24,6 @@ module.exports = {
       },
       backgroundImage : {
         "footer" : "linear-gradient(94.61deg, #0BC6E3 20.96%, #8600C5 86.91%)",
-       
       },
       colors: {
         "accent" : {

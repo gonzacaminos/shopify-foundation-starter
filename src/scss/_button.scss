@@ -2,7 +2,7 @@
     @apply text-base inline-block;
 
     &-primary {
-        @apply bg-accent hover:bg-black px-10 md:px-20 py-4;
+        @apply bg-accent hover:bg-black hover:text-white px-10 md:px-20 py-4;
     }
 
     &-tiny {

@@ -22,7 +22,7 @@
     </header>
     <div class="md:grid md:grid-cols-2 md:justify-items-center space-y-8 md:space-y-0" x-cloak x-show="showTab(1)">
       <h4 class="md:hidden {{ link_class }}">DESCRIPTION</h4>
-      <img src="{{ product.featured_image | image_url: width: 600 }}" loading="lazy" class="object-cover object-center">
+      {{ product.featured_image | image_url: width: 600 | image_tag: class: 'object-cover object-center', loading: 'lazy' }}
       <div class="md:px-10 text-small-heading">
         {{ product. description }}
       </div>

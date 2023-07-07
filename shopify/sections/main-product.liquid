@@ -22,16 +22,15 @@
       {% if product.has_only_default_variant %}
         <div class="md:col-span-2 space-y-4">
           {% for image in product.images %}
-            <link rel="preload" as="image" href="{{ image.src | image_url: width: 750 }}">
 
-            <button class="w-full md:w-20 md:h-36 block p-4 bg-gray-750 toggleImage" data-url="{{ image.src | image_url: width: 750 }}" data-alt="{{ image.alt | escape }}" @click="toggleImage('{{ image.src | img_url: '750x' }}')">
-              <img sizes="
-                                                                    (min-width: 768px) 120px,
-                                                                    400px
-                                                                  " srcset="
-                                                                    {{ image.src | image_url: width: 80 }} 80w,
-                                                                    {{ image.src | image_url: width: 400 }} 400w
-                                                                  " src="{{ image.src | image_url: width: 400 }}" alt="{{ image.alt | escape }}" loading="lazy" class="w-full h-full object-contain object-center pointer-events-none {% unless forloop.first %} glightbox {% endunless %}" data-title="" data-description="">
+            <button class="w-full md:w-20 md:h-36 block p-4 bg-gray-750 toggleImage" data-url="{{ image.src | image_url: width: 750 }}" data-alt="{{ image.alt | escape }}" @click="toggleImage('{{ image.src | image_url: width: 750 }}')">
+              {% liquid
+                  assign image_class = 'w-full h-full object-contain object-center pointer-events-none'
+                  unless forloop.firstglightbox
+                    assign image_class = image_class | append: ' glightbox' 
+                  endunless 
+              %}
+              {{ image.src | image_url: width: 400 | image_tag: class: image_class, loading: 'lazy', sizes: '(min-width: 768px) 120px,400px', preload: true }}
             </button>
           {% endfor %}
         </div>

@@ -9,23 +9,9 @@
 
   {% if article.image %}
     <div class="mb-8 md:mb-12">
-      <img
-        sizes="
-          (min-width: 640px) 750px,
-          (min-width: 480px) 600px,
-          450px
-        "
-        srcset="
-          {{ article | image_url: width: 450 }} 450w,
-          {{ article | image_url: width: 600 }} 600w,
-          {{ article | image_url: width: 750 }} 750w,
-        "
-        src="{{ article | image_url: width: 750 }}"
-        alt="{{ article.image.alt | escape }}"
-        loading="lazy"
-        class="w-full"
-      >
+      {{ article | image_url: width: 750 | image_tag: class: 'w-full', loading: 'lazy', sizes: '(min-width: 640px) 750px,(min-width: 480px) 600px,450px' }}
     </div>
+   
   {% endif %}
 
   <div>

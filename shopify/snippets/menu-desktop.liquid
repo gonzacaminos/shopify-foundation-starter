@@ -9,19 +9,19 @@
       }"
     >
       {%- for link in menu.links -%}
-        {%- assign link_title_downcase = link.title | downcase -%}
-        {%- assign link_title_downcase = link.title | downcase -%}
-        {%- assign mega_menu_block = '' -%}
+          {%liquid assign link_title_downcase = link.title | downcase 
+          assign link_title_downcase = link.title | downcase 
+          assign mega_menu_block = '' 
         
   
-        {%- for block in section.blocks -%}
-          {%- assign menu_item_downcase = block.settings.menu_item | downcase -%}
+         for block in section.blocks 
+           assign menu_item_downcase = block.settings.menu_item | downcase 
   
-          {%- if menu_item_downcase == link_title_downcase -%}
-            {%- assign mega_menu_block = block -%}
-            {%- break -%}
-          {%- endif -%}
-        {%- endfor -%}
+           if menu_item_downcase == link_title_downcase 
+             assign mega_menu_block = block 
+             break 
+           endif 
+         endfor %}
   
         <li class="text-sm uppercase leading-tight flex h-full px-8 items-center {% if mega_menu_block != '' %}has-dropdown{% endif %}" data-item-title="{{ link.title | escape }}" @mouseenter="setActiveMenu({{ forloop.index }})"  @mouseleave="setActiveMenu(-1)">
           <a class="flex items-center border-b transition duration-150 mt-px {% if link.active %}border-black{% else %}border-transparent hover:border-black{% endif %}" href="{{ link.url }}" {% if link.links.size > 0 or mega_menu_block != '' %} aria-controls="desktop-menu-{{ forloop.index }}" aria-expanded="false"{% endif %}>
@@ -38,10 +38,10 @@
                   
                   {%- if mega_menu_block.type == 'mega_menu_product' -%}
                   <div class="grid grid-cols-5 space-x-4">
-                    {% render 'mega-menu-product', product: mega_menu_block.settings.product_1, title: mega_menu_block.settings.title_1, image: mega_menu_block.settings.image_1, url: mega_menu_block.settings.url_1 %}
-                    {% render 'mega-menu-product', product: mega_menu_block.settings.product_2, title: mega_menu_block.settings.title_2, image: mega_menu_block.settings.image_2, url: mega_menu_block.settings.url_2 %}
-                    {% render 'mega-menu-product', product: mega_menu_block.settings.product_3, title: mega_menu_block.settings.title_3, image: mega_menu_block.settings.image_3, url: mega_menu_block.settings.url_3 %}
-                    {% render 'mega-menu-product', product: mega_menu_block.settings.product_4, title: mega_menu_block.settings.title_4, image: mega_menu_block.settings.image_4, url: mega_menu_block.settings.url_4 %}
+                    {%liquid render 'mega-menu-product', product: mega_menu_block.settings.product_1, title: mega_menu_block.settings.title_1, image: mega_menu_block.settings.image_1, url: mega_menu_block.settings.url_1 
+                    render 'mega-menu-product', product: mega_menu_block.settings.product_2, title: mega_menu_block.settings.title_2, image: mega_menu_block.settings.image_2, url: mega_menu_block.settings.url_2 
+                    render 'mega-menu-product', product: mega_menu_block.settings.product_3, title: mega_menu_block.settings.title_3, image: mega_menu_block.settings.image_3, url: mega_menu_block.settings.url_3 
+                    render 'mega-menu-product', product: mega_menu_block.settings.product_4, title: mega_menu_block.settings.title_4, image: mega_menu_block.settings.image_4, url: mega_menu_block.settings.url_4 %}
                     {% if mega_menu_block.settings.collection_url != blank %}
                       <div class="px-4 flex items-center border-l">
                         <a href="{{ mega_menu_block.settings.collection_url }}">

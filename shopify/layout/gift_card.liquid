@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-    <link rel="preload" href="{{ 'bundle.css' | asset_url }}" as="style">
-    <link rel="preload" href="{{ 'bundle.js' | asset_url }}" as="script">
+    {{ 'bundle.js' | asset_url | preload_tag: as: 'script' }}
 
     <title>{{ 'gift_card.title' | t }}</title>
 
@@ -17,11 +16,8 @@
       <link rel="canonical" href="{{ canonical_url }}">
     {% endif %}
 
-    <!-- google fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 
-    {{ 'bundle.css' | asset_url | stylesheet_tag }}
+    {{ 'bundle.css' | asset_url | stylesheet_tag: preload: true }}
 
     <!-- header hook for Shopify plugins -->
     {{ content_for_header }}
