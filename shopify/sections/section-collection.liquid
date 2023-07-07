@@ -1,22 +1,21 @@
-<div class="container mb-12 md:mb-24">
-  <div class="grid lg:grid-cols-3 gap-4 mb-6 md:mb-12">
-    <div class="lg:col-start-2 text-2xl lg:text-3xl font-bold text-center">
+{% assign is_slider = section.settings.is_slider %}
+
+<div class="container mb-12 md:mb-24 {% if is_slider %} swiper-scroll relative{% endif %} {{ section.settings.product_layout }}">
+  <div class="mb-8 md:mb-12">
+    <div class="heading heading-{{ section.settings.text_size }} text-{{ section.settings.text_alignment }}">
       {{ section.settings.headline }}
     </div>
 
-    <div class="hidden lg:flex justify-end items-center">
-      <a href="{{ routes.collections_url }}" class="button button-secondary flex justify-center items-center">
-        {{ 'action.view_more' | t }} {% render 'icon-chevron-right', class: 'w-4 h-auto ml-1' style: 'margin-top: 2px;' %}
-      </a>
-    </div>
   </div>
 
-  <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
+  <div class="{% unless is_slider %} grid space-y-8 md:space-y-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-{{ section.settings.collection_products_limit }} gap-x-16 gap-y-8 {% else %} swiper-wrapper pb-20{% endunless %}">
     {% assign collection = collections[section.settings.collection_featured] %}
 
     {% unless collection == blank %}
       {% for product in collection.products limit: section.settings.collection_products_limit %}
-        {% render 'layout-product', product: product %}
+        <div class="swiper-slide">
+          {% render 'layout-product', product: product, alt_layout: section.settings.alt_layout %}
+        </div>
       {% endfor %}
     {% else %}
       {% for i in (1..4) %}
@@ -27,12 +26,23 @@
       {% endfor %}
     {% endunless %}
   </div>
+
+  {% if is_slider %}
+    <div class="swiper-scrollbar !relative mt-4"></div>
+    <div class="flex items-center justify-between pt-10">
+      <div class="swiper-button-prev no-after scroll mr-10 relative w-auto">{% render 'icon-backward-arrow' %}</div>
+      <div class="swiper-button-next no-after scroll relative w-auto">{% render 'icon-forward-arrow' %}</div>
+    </div>
+  {% endif %}
+
+
+
 </div>
 
 {% schema %}
 {
   "name": "t:sections.collection.name",
-  "class": "shopify-section-vue",
+  "class": "shopify-section-vue overflow-hidden shopify-section-collection",
   "settings": [
     {
       "type": "text",
@@ -41,23 +51,75 @@
       "default": "Selected products"
     },
     {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Title alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label": "Title Size",
+      "options": [
+        {
+          "value": "section",
+          "label": "Big"
+        },
+        {
+          "value": "subtitle",
+          "label": "Medium"
+        }
+      ],
+      "default": "section"
+    },
+    {
       "type": "collection",
       "id": "collection_featured",
       "label": "t:common.collection"
     },
     {
-      "type": "select",
+      "type": "range",
       "id": "collection_products_limit",
-      "label": "t:sections.collection.settings.max-products-to-display",
-      "default": "4",
+      "min": 3,
+      "max": 14,
+      "step": 1,
+      "unit": "pr",
+      "label": "Products to show",
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "is_slider",
+      "label": "Use slider",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "product_layout",
+      "label": "Product layout",
+      "default": "layout_2",
       "options": [
         {
-          "value": "4",
-          "label": "t:sections.collection.settings.4-products"
+          "value": "layout_1",
+          "label": "Layout 1"
         },
         {
-          "value": "8",
-          "label": "t:sections.collection.settings.8-products"
+          "value": "layout_2",
+          "label": "Layout 2"
         }
       ]
     }

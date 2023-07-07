@@ -1,4 +1,4 @@
-<div class="container max-w-screen-lg">
+<div class="c-container-padded mb-20">
   <h1 class="text-2xl md:text-3xl font-bold text-center mb-4">
     {{ 'cart.title' | t }}
   </h1>
@@ -18,22 +18,25 @@
     </div>
 
     <form action="/cart?locale={{ request.locale.iso_code }}" method="post" novalidate>
-      <input type="hidden" name="attributes[locale]" value="{{ request.locale.iso_code }}" />
+      <input type="hidden" name="attributes[locale]" value="{{ request.locale.iso_code }}"/>
 
       {% for item in cart.items %}
-        {% capture deleteUrl %}{% unless routes.root_url == '/' %}{{ routes.root_url }}{% endunless %}/cart/change?line={{ forloop.index }}&amp;quantity=0{% endcapture %}
+        {% capture deleteUrl %}
+          {% unless routes.root_url == '/' %}
+            {{ routes.root_url }}{% endunless %}/cart/change?line={{ forloop.index }}&amp;quantity=0{% endcapture %}
 
-        {% render 'layout-product-cart',
-          class: 'mb-12 md:mb-8'
-          product: item
-          deleteUrl: deleteUrl
-        %}
+        {% render 'layout-product-cart'
+         , class: 'mb-12 md:mb-8'
+         product: item
+         , line_id: forloop.index
+         , deleteUrl: deleteUrl
+         %}
       {% endfor %}
 
       <div class="flex flex-col items-end border-t pt-6">
         <div class="text-lg font-semibold space-x-8">
           <span class="inline-block">{{ 'cart.subtotal' | t }}</span>
-          <span class="inline-block">{{ cart.total_price | money_with_currency }}</span>
+          <span class="inline-block js-go-cart-drawer-subtotal_custom on_demand">{{ cart.total_price | money_with_currency }}</span>
         </div>
 
         <div class="text-gray-600 text-sm">
@@ -44,10 +47,7 @@
           {% endif %}
         </div>
 
-        <button
-          name="checkout"
-          class="button button-primary mt-8"
-        >
+        <button name="checkout" class="button button-primary mt-8">
           {{ 'action.checkout' | t }}
         </button>
       </div>

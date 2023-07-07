@@ -1,0 +1,49 @@
+<form class="" action="/cart/add" method="post" enctype="multipart/form-data" id="add-to-cart-{{ product.handle }}-{{ collection.handle }}-{{ section.id }}">
+  <div class="flex justify-between">
+    {% if product.has_only_default_variant %}
+      <input name="id" type="hidden" value="{{ current_variant.id }}" readonly>
+    {% else %}
+      {% if show_variants %}
+        <div>
+          <label class="mb-4 block font-bold text-small">Select your product</label>
+          <select name="id" x-model="product" class="block py-4 px-6 mb-10" @change="variantChange">
+            {% for variant in product.variants %}
+              <option value="{{ variant.id }}" @click="variantChange('{{ variant.title }}', '{{ variant.price | money }}', '{{ variant.featured_image }}')" {% if variant == current_variant %}selected="selected"{% endif %}>
+                {{ variant.title }} - {{ variant.price | money }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+
+  {% if current_variant.available %}
+    <div class="">
+
+      {% if quantity %}
+        <div class="quantity text-small mb-20" x-data="{
+                                                                                  value: 1,
+                                                                                  increment(){ this.value = Math.min(this.value +1, {{ current_variant.inventory_quantity }})},
+                                                                                  decrement(){ this.value = Math.max(1, this.value -1)}
+                                                                                }">
+          <label class="mb-4 block font-bold">Quantity</label>
+          <div class="flex items-center">
+            <div class="flex max-w-max px-4 py-2 border-2 border-gray-650">
+              <input class="inline-block cursor-pointer" type="button" value="-" class="minus" @click="decrement">
+              <input class="inline-block w-16 text-center" type="number" step="1" min="1" max="{{ current_variant.inventory_quantity }}" name="quantity" :value="value" title="Quantity" class="input-text qty text" size="4" pattern="" inputmode="">
+              <input class="inline-block cursor-pointer" type="button" value="+" class="plus" @click="increment">
+            </div>
+            <span class="text-gray-550 block text-center ml-5">({{ current_variant.inventory_quantity }} available)</span>
+          </div>
+        </div>
+
+      {% endif %}
+      <div>
+        <button name="add" class="button button-primary add-to-cart block js-go-cart-add-to-cart" data-id="{{ current_variant.id }}">
+          {{ 'action.add_to_cart' | t }}
+        </button>
+      </div>
+    </div>
+  {% endif %}
+</form>

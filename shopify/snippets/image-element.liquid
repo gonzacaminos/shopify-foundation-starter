@@ -5,16 +5,16 @@
 {% assign width = width | plus: 0 %} 
 
 <img srcset="
-{%- if width >= 375 -%}{{ image | img_url: '375x' }} 375w,{%- endif -%}
-{%- if width >= 750 -%}{{ image | img_url: '750x' }} 750w,{%- endif -%}
-{%- if width >= 1100 -%}{{ image | img_url: '1100x' }} 1100w,{%- endif -%}
-{%- if width >= 1500 -%}{{ image | img_url: '1500x' }} 1500w,{%- endif -%}
-{%- if width >= 1780 -%}{{ image | img_url: '1780x' }} 1780w,{%- endif -%}
-{%- if width >= 2000 -%}{{ image | img_url: '2000x' }} 2000w,{%- endif -%}
-{%- if width >= 2800 -%}{{ image | img_url: '2800x' }} 2800w{%- endif -%}
-{{ image | img_url: 'master' }} {{ image.width }}w"
+{%- if width >= 375 -%}{{ image | image_url: width: 375 }} 375w,{%- endif -%}
+{%- if width >= 750 -%}{{ image | image_url: width: 750 }} 750w,{%- endif -%}
+{%- if width >= 1100 -%}{{ image | image_url: width: 1100 }} 1100w,{%- endif -%}
+{%- if width >= 1500 -%}{{ image | image_url: width: 1500 }} 1500w,{%- endif -%}
+{%- if width >= 1780 -%}{{ image | image_url: width: 1780 }} 1780w,{%- endif -%}
+{%- if width >= 2000 -%}{{ image | image_url: width: 2000 }} 2000w,{%- endif -%}
+{%- if width >= 2800 -%}{{ image | image_url: width: 2800 }} 2800w{%- endif -%}
+{{ image | image_url }} {{ image.width }}w"
 sizes="(min-width: 750px) calc(100vw - 22rem), 1100px"
-src="{{ image | img_url: '1445x' }}"
+src="{{ image | image_url: width: 1445 }}"
 loading="lazy"
 alt="{{ image.alt | escape }}"
 width="{{ image.width }}"
@@ -22,10 +22,10 @@ height="{{ image.height }}"
 class="{{class}}"
 >
 
-{%comment%} 
+{% comment %} 
 
 Usage example: 
 
 {% render 'image-element', image: image_name_string %}
 
-{%endcomment%}
+{% endcomment %}

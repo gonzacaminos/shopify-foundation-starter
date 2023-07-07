@@ -1,4 +1,4 @@
-<div class="container max-w-screen-sm">
+<div class="c-container-padded py-5">
   <h1 class="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-16">
     {{ 'customer.entry.create_account' | t }}
   </h1>
@@ -9,7 +9,7 @@
     {% if form.errors %}
       {% capture error_text %}
         {{ form.errors | default_errors }}
-      {% endcapture%}
+      {% endcapture %}
 
       {% render 'layout-message',
         type: 'error'
@@ -21,7 +21,7 @@
     <div class="mb-4 sm:mb-6">
       <label
         for="FirstName"
-        class="block"
+        class="block mb-2"
       >
         {{ 'form.first_name' | t }}
       </label>
@@ -31,7 +31,7 @@
         id="FirstName"
         name="customer[first_name]"
         {% if form.first_name %}value="{{ form.first_name }}"{% endif %}
-        class="w-full"
+        class="w-full border px-2"
         required
       >
     </div>
@@ -39,7 +39,7 @@
     <div class="mb-4 sm:mb-6">
       <label
         for="LastName"
-        class="block"
+        class="block mb-2"
       >
         {{ 'form.last_name' | t }}
       </label>
@@ -49,7 +49,7 @@
         id="LastName"
         name="customer[last_name]"
         {% if form.last_name %}value="{{ form.last_name }}"{% endif %}
-        class="w-full"
+        class="w-full border px-2"
         required
       >
     </div>
@@ -57,7 +57,7 @@
     <div class="mb-4 sm:mb-6">
       <label
         for="CustomerEmail"
-        class="block"
+        class="block mb-2"
       >
         {{ 'form.email' | t }}
       </label>
@@ -67,7 +67,7 @@
         id="CustomerEmail"
         name="customer[email]"
         value="{% if form.email %}{{ form.email }}{% endif %}"
-        class="w-full"
+        class="w-full border px-2"
         required
       >
     </div>
@@ -75,7 +75,7 @@
     <div class="mb-4 sm:mb-10">
       <label
         for="CreatePassword"
-        class="block"
+        class="block mb-2"
       >
         {{ 'form.password' | t }}
       </label>
@@ -84,12 +84,12 @@
         type="password"
         id="CreatePassword"
         name="customer[password]"
-        class="w-full"
+        class="w-full border px-2"
         required
       >
     </div>
 
-    <div class="flex flex-wrap gap-4 sm:gap-6">
+    <div class="flex flex-wrap gap-4 sm:gap-6 pt-10 md:pt-0">
       <button
         type="submit"
         class="button button-primary"
@@ -97,7 +97,7 @@
         {{ 'action.create_account' | t }}
       </button>
 
-      <div class="w-full sm:w-auto flex justify-center items-center">
+      <div class="w-full sm:w-auto md:flex justify-center items-center">
         <span>{{ 'common.or' | t }}&nbsp;</span>
 
         <a

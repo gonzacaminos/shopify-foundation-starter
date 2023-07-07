@@ -2,9 +2,7 @@
 
 <div class="w-full h-full {{ class | default: '' }}" style="{{ style | default: '' }}">
   <select
-    @change="appendParameter({
-      parameter: 'sort_by'
-    }, $event)"
+    id="sort-by"
     class="w-full h-full pl-4 pr-2"
   >
     {% for option in collection.sort_options %}

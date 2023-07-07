@@ -2,15 +2,35 @@
  * entry file for Tailwind CSS
  * and other style files
  */
-@import "~@dango-digital/gocart/src/lib/scss/go-cart";
+@import "~@lonelypixels/gocart/src/lib/scss/go-cart";
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-
+@import "~swiper/css";
+@import "~swiper/css/navigation";
+@import "~swiper/css/pagination";
+@import "~swiper/css/scrollbar";
+@import "~glightbox/dist/css/glightbox.min";
 
 //functions
 @import "functions/_rem";
 
-@import "_fonts";
-@import "_globals";
+@layer components {
+  .c-container {
+    @apply w-full max-w-[1280px] mx-auto;
+  }
+
+  .c-container-padded {
+    @extend .c-container;
+    @apply px-8 xl:px-0;
+  }  
+}
+
+@import "fonts";
+@import "globals";
+@import "scrollbar";
 @import "cart";
+@import "filters"; 
+@import "components";
+@import "captcha";
+@import "button";

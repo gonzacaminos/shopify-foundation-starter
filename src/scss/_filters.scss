@@ -1,0 +1,29 @@
+.filter-form {
+    details {
+        .filter-group-display {
+
+            label {
+                input[type="checkbox"] {
+                    @apply mr-3;
+                }
+            }
+
+            &__submit {
+                @apply my-4;
+                input {
+                    @apply px-6 py-2 cursor-pointer text-white bg-black font-black text-sm uppercase
+                }
+            }
+        }
+    
+        .active-filters {
+            &__clear {
+                @apply block underline my-10 uppercase text-sm; 
+            }
+
+            &__remove-filter {
+                    @apply inline-block text-sm px-4 py-2 border rounded-full;
+            }
+        }
+    }
+}

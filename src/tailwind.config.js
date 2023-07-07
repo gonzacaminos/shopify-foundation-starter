@@ -24,10 +24,12 @@ module.exports = {
       },
       backgroundImage : {
         "footer" : "linear-gradient(94.61deg, #0BC6E3 20.96%, #8600C5 86.91%)",
-       
       },
       colors: {
-        "cyan" : "#BC2EFF",
+        "accent" : {
+          "DEFAULT": "#FFC80B",
+          "darker" : "#e2ab29"
+        },
         "primary" : "#BC2EFF",
         "secondary" : "#6830CC"
       },
@@ -36,6 +38,15 @@ module.exports = {
         "content" : "Source Sans Pro, sans-serif"
         */
       },
+      spacing: {
+        '40vh': '40vh',
+        '50vh': '50vh',
+        '60vh': '60vh',
+        '70vh': '70vh',
+        '80vh': '80vh',
+        '90vh': '90vh',
+        '100vh': '100vh'
+      }
     },
     container: {
       center: true,

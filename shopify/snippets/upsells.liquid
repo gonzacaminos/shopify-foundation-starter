@@ -1,0 +1,73 @@
+<div class="px-12 py-2">
+  {%liquid 
+      assign cart_items = null
+      assign collections_list = null
+      assign max_products = section.settings.max_upsell_items
+      assign max_products_per_collection = section.settings.max_upsell_per_collection
+      assign shown_products = 0
+      assign upsell_list = null
+
+
+      if section.settings.collection_featured == blank
+        for line_item in items
+          assign cart_items = cart_items | append: ',' | append: line_item.product.handle
+          for _collection in line_item.product.collections
+            assign collections_list = collections_list | append: ',' | append: _collection.handle
+          endfor
+        endfor
+      else
+        assign collections_list = section.settings.collection_featured.handle | append: ','
+      endif
+
+      assign cart_items = cart_items | split: ','
+      assign collections_list = collections_list | split: ',' | uniq | compact
+
+      for _collection in collections_list
+
+        assign _collection_object = collections[_collection]
+        assign included_products = 0
+        for _product in _collection_object.products
+
+          unless cart_items contains _product.handle
+
+            if _product.available
+
+              assign upsell_list = _product.handle | append: ',' | append: upsell_list
+              assign included_products = included_products | plus: 1
+
+            endif
+          endunless
+
+          if included_products >= max_products_per_collection
+            break
+          endif
+
+        endfor
+
+      endfor
+
+      assign upsell_list = upsell_list | split: ',' | uniq | compact
+  %}
+
+  {% if upsell_list != blank %}
+    <div x-init="listLength = {{ upsell_list.size }}">
+      <h4 class="text-small py-2" x-show="!isFull()">{{ section.settings.upsells_title }}</h4> 
+      <ul class="go-cart-upsell-list space-x-2 flex overflow-x-auto custom-scroll-bar">
+        {% for product_handle in upsell_list %}
+          {% assign product_ref = all_products[product_handle] %}
+          {% assign shown_products = shown_products | plus: 1 %}
+          <li
+            id="{{ product_ref.selected_or_first_available_variant.id }}"
+            x-show="!items.includes({{ product_ref.selected_or_first_available_variant.id }})"
+            x-ref="item_{{ product_ref.selected_or_first_available_variant.id }}">
+            {% render 'upsell-product', product_ref: product_ref %}
+          </li>
+          {% if shown_products >= max_products %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+
+  {% endif %}
+</div>

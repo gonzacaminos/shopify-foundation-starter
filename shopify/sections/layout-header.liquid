@@ -12,7 +12,7 @@ x-data="{
   {% assign icon_class = 'w-auto h-7 text-black' %}
   {% assign link_class = 'flex flex-col justify-center items-center text-sm text-gray-600 hover:text-black font-medium transition duration-150 p-2' %}
 
-  <div class="container max-w-page-width">
+  <div class="c-container-padded">
    
     <div class="h-16 md:h-24 flex justify-between md:justify-start items-center pr-3">
 
@@ -28,10 +28,10 @@ x-data="{
         class="header-brand mx-auto inline-block text-2xl lg:text-3xl font-bold ml-0">
         {% if section.settings.logo != blank %}
           {% if section.settings.logo_mobile != blank %}
-            <span class="md:hidden"> {{ section.settings.logo_mobile | img_url: 'master' | img_tag }} </span>
-            <span class="hidden md:inline-block"> {{ section.settings.logo | img_url: 'master' | img_tag }} </span>
+            <span class="md:hidden"> {{ section.settings.logo_mobile | image_url | image_tag }} </span>
+            <span class="hidden md:inline-block"> {{ section.settings.logo | image_url | image_tag }} </span>
           {% else %}
-            {{ section.settings.logo | img_url: 'master' | img_tag }}
+            {{ section.settings.logo | image_url | image_tag }}
           {% endif %}
         {% else %}
           {{ shop.name }}

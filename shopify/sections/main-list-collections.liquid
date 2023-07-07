@@ -9,20 +9,9 @@
         {% for collection in collections %}
           <div>
             <a href="{{ collection.url }}">
-              <img
-                sizes="
-                  (min-width: 768px) 450px,
-                  400px
-                "
-                srcset="
-                  {{ collection.image | img_url: '275x' }} 275w,
-                  {{ collection.image | img_url: '450x' }} 450w
-                "
-                src="{{ collection.image | img_url: '400x' }}"
-                alt="{{ collection.image.alt | escape }}"
-                loading="lazy"
-                class="w-full h-32 sm:h-48 lg:h-64 xl:h-80 object-cover object-center"
-              >
+              {% if image %}
+                {{ collection.image | image_url: width: 400 | image_tag: class: 'w-full h-32 sm:h-48 lg:h-64 xl:h-80 object-cover object-center', loading: 'lazy', sizes: '(min-width: 768px) 450px,400px' }}
+              {% endif %}
             </a>
 
             <div class="mt-4">

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container py-10">
   <h1 class="text-2xl md:text-3xl font-bold text-center mb-4">
     {{ 'customer.account.title' | t }}
   </h1>
@@ -47,10 +47,7 @@
                     {{ 'customer.account.order_number' | t }}
                   </span>
 
-                  <a
-                    href="{{ order.customer_url }}"
-                    class="lg:border lg:border-black lg:hover:bg-black lg:hover:text-white transition duration-150 px-4 py-2"
-                  >
+                  <a href="{{ order.customer_url }}" class="lg:border lg:border-black lg:hover:bg-black lg:hover:text-white transition duration-150 px-4 py-2">
                     {{ order.name }}
                   </a>
                 </div>
@@ -119,10 +116,7 @@
         {% endunless %}
 
         <div class="p-4">
-          <a
-            href="{{ routes.account_addresses_url }}"
-            class="button button-primary w-full"
-          >
+          <a href="{{ routes.account_addresses_url }}" class="button button-primary w-full">
             {{ 'action.edit_addresses' | t }} ({{ customer.addresses_count }})
           </a>
         </div>

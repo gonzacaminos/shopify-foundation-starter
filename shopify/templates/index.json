@@ -5,7 +5,7 @@
       "settings": {
         "headline": "Headline",
         "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste quos hic praesentium recusandae dolores odio animi deleniti officia cum itaque.",
-        "button-url": "\/",
+        "button-url": "/",
         "button-text": "Button"
       }
     },
@@ -14,7 +14,7 @@
       "settings": {
         "headline": "Selected products",
         "collection_featured": "",
-        "collection_products_limit": "4"
+        "collection_products_limit": 4
       }
     },
     "section-banner": {
@@ -22,7 +22,7 @@
       "settings": {
         "headline": "Headline",
         "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste quos hic praesentium recusandae dolores odio animi deleniti officia cum itaque.",
-        "button-url": "\/",
+        "button-url": "/",
         "button-text": "Button"
       }
     },

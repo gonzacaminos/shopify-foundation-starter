@@ -1,30 +1,83 @@
-<div class="container">
-  <h1 class="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-16">
-    {{ collection.title }}
-  </h1>
+{% if collection.metafields.my_fields.header_background %}
+  {% assign image = collection.metafields.my_fields.header_background %}
+{% else %}
+  {% assign image = section.settings.background %}
+{% endif %}
 
-  {% if collection.description != blank %}
-    <p class="max-w-screen-sm mx-auto md:-mt-6 mb-6 md:mb-12">
-      {{ collection.description }}
-    </p>
+<div class="layout_2">
+  <div class="w-full max-h-40vh relative overflow-hidden">
+    {% if image %}
+      {{ image | image_url: width: 1000 | image_tag: class: 'w-full h-full object-cover object-center aspect-video', loading: 'lazy', sizes: '(min-width: 1536px) 1000px,(min-width: 1280px) 850px,(min-width: 1024px) 700px,(min-width: 768px) 400px,(min-width: 640px) 500px' }}
+    {% endif %}
+  
+    <div class="container absolute inset-0 w-full h-full flex items-end justify-start">
+      <h1 class="text-white uppercase text-2xl md:text-[80px] font-extrabold mb-6 md:mb-16 leading-none">
+        {{ collection.title }}
+      </h1>
+    </div>
+
+  </div>
+
+  {% if collection and collection.products %}
+    {% assign amount = collection.all_products_count %}
+    <div class="container">
+      {% render 'layout-sort-bar', amount: amount class: 'my-8' %}
+    </div>
   {% endif %}
 
-  {% paginate collection.products by 16 %}
-    {% if collection and collection.products %}
-      {% assign amount = collection.all_products_count %}
-      {% render 'layout-sort-bar', amount: amount class: 'mb-8' %}
+  <div class="container py-10 lg:grid lg:grid-cols-6 lg:gap-x-16 lg:gap-y-">
+    <div class="col-span-1 pr-5">
+      {% render 'filters' %}
+    </div>
 
-      <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
-        {% for product in collection.products %}
-          {% render 'layout-product', product: product %}
-        {% endfor %}
-      </div>
-    {% else %}
-      <div>
-        {{ 'common.no_products' | t }}
-      </div>
-    {% endif %}
+    <div class="col-span-5">
+      {% if collection.description != blank %}
+        <p class="max-w-screen-sm mx-auto md:-mt-6 mb-6 md:mb-12">
+          {{ collection.description }}
+        </p>
+      {% endif %}
 
-    {% render 'layout-pagination', paginate: paginate %}
-  {% endpaginate %}
+      {% paginate collection.products by 8 %}
+        {% if collection and collection.products %}
+          <div id="AjaxinateContainer" class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-10 gap-y-16">
+            {% for product in collection.products %}
+              {% render 'layout-product', product: product %}
+            {% endfor %}
+          </div>
+        {% else %}
+          <div>
+            {{ 'common.no_products' | t }}
+          </div>
+        {% endif %}
+
+        <div class="load-more flex justify-center my-32" id="AjaxinatePagination">
+          {% if paginate.next %}
+            <a class="text-subtitle text-center px-10 py-6 border-2 border-accent hover:bg-accent uppercase" href="{{ paginate.next.url }}">Load More</a>
+          {% endif %}
+        </div>
+      {% endpaginate %}
+    </div>
+
+  </div>
+
 </div>
+
+
+{% schema %}
+{
+  "name": "Collection",
+  "class": "main-collection-template",
+  "settings": [
+    {
+      "type": "image_picker",
+      "label": "Logo",
+      "id": "logo"
+    },
+    {
+      "type": "image_picker",
+      "label": "Background",
+      "id": "background"
+    }
+  ]
+}
+{% endschema %}
