@@ -22,19 +22,27 @@
     <div class="">
 
       {% if quantity %}
+      {%liquid if current_variant.inventory_management 
+         assign max_quantity = current_variant.inventory_quantity 
+       else 
+         assign max_quantity = 999 
+       endif %}
+
         <div class="quantity text-small mb-20" x-data="{
-                                                                                  value: 1,
-                                                                                  increment(){ this.value = Math.min(this.value +1, {{ current_variant.inventory_quantity }})},
-                                                                                  decrement(){ this.value = Math.max(1, this.value -1)}
-                                                                                }">
+                                                  value: 1,
+                                                  increment(){ this.value = Math.min(this.value +1, {{ max_quantity }})},
+                                                  decrement(){ this.value = Math.max(1, this.value -1)}
+                                                }">
           <label class="mb-4 block font-bold">Quantity</label>
           <div class="flex items-center">
             <div class="flex max-w-max px-4 py-2 border-2 border-gray-650">
-              <input class="inline-block cursor-pointer" type="button" value="-" class="minus" @click="decrement">
-              <input class="inline-block w-16 text-center" type="number" step="1" min="1" max="{{ current_variant.inventory_quantity }}" name="quantity" :value="value" title="Quantity" class="input-text qty text" size="4" pattern="" inputmode="">
-              <input class="inline-block cursor-pointer" type="button" value="+" class="plus" @click="increment">
+              <input class="inline-block cursor-pointer border-none" type="button" value="-" class="minus" @click="decrement">
+              <input class="inline-block w-16 text-right border-none" type="number" step="1" min="1" max="{{ current_variant.inventory_quantity }}" name="quantity" title="Quantity" class="input-text qty text" size="4" pattern="" inputmode="" x-model="value">
+              <input class="inline-block cursor-pointer border-none" type="button" value="+" class="plus" @click="increment">
             </div>
+            {% if current_variant.inventory_management   %}
             <span class="text-gray-550 block text-center ml-5">({{ current_variant.inventory_quantity }} available)</span>
+            {% endif %}
           </div>
         </div>
 
