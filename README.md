@@ -8,7 +8,7 @@
 
 A Shopify starter based on Shopify Foundation Theme by UI Crooks. 
 
-is modern Shopify theme built with [Shopify Theme Lab](https://github.com/uicrooks/shopify-theme-lab), [Vue](https://v3.vuejs.org/) and [Tailwind CSS](https://tailwindcss.com).
+A modern Shopify theme built with [Shopify Theme Lab](https://github.com/uicrooks/shopify-theme-lab), [Vue](https://v3.vuejs.org/) and [Tailwind CSS](https://tailwindcss.com).
 
 <!-- features (start) -->
 ## Features
