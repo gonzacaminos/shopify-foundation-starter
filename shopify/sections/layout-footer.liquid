@@ -64,7 +64,7 @@
       </div>
     {% endif %}
 
-    {% if shop.enabled_payment_types != blank %}
+    {% if shop.enabled_payment_types != blank and section.settings.show_payment_methods%}
       <div class="col-span-2">
         <div class="text-lg font-bold mb-3">
           {{ 'footer.payment_methods' | t }}
@@ -150,6 +150,11 @@
       "type": "url",
       "id": "social_youtube_link",
       "label": "t:common.link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_methods",
+      "label": "Show payment methods"
     }
   ]
 }
