@@ -16,7 +16,7 @@ x-data="{
    
     <div class="h-16 md:h-24 flex justify-between md:justify-start items-center pr-3">
 
-      <div class="mr-8 md:hidden flex items-center">
+      <div class="mr-8 flex {% unless section.settings.hide_desktop_nav %} md:hidden {% endunless %} items-center">
         <button @click="toggleMenu()" class="{{ link_class }}">
           <span x-show="!isOpen">{% render 'icon-menu', class: icon_class %}</span>
           <span x-cloak x-show="isOpen">{% render 'icon-cancel', class: icon_class %}</span>
@@ -28,7 +28,7 @@ x-data="{
         class="header-brand mx-auto inline-block text-2xl lg:text-3xl font-bold ml-0">
         {% if section.settings.logo != blank %}
           {% if section.settings.logo_mobile != blank %}
-            <span class="md:hidden"> {{ section.settings.logo_mobile | image_url: width: 100 | image_tag }} </span>
+            <span class="{% unless section.settings.hide_desktop_nav %} md:hidden {% endunless %}"> {{ section.settings.logo_mobile | image_url: width: 100 | image_tag }} </span>
             <span class="hidden md:inline-block"> {{ section.settings.logo | image_url: width: 100 | image_tag }} </span>
           {% else %}
             {{ section.settings.logo | image_url: width: 100 | image_tag }}
@@ -39,24 +39,30 @@ x-data="{
         
       </a>
 
-      <div class="ml-24 hidden md:block md:h-full">
-        {%- render 'menu-desktop', menu: section.settings.navigation_menu -%}
-      </div>
+      {%  unless section.settings.hide_desktop_nav %}
+        <div class="ml-24 hidden md:block md:h-full">
+          {%- render 'menu-desktop', menu: section.settings.navigation_menu -%}
+        </div>
+      {% endunless %}
+    
 
       <div class="flex space-x-2 lg:space-x-6 ml-auto items-center">
-        <button
-          class="{{ link_class }}"
-          @click="toggleSearch()"
-        >
-          {% render 'icon-search', class: icon_class %}
-        </button>
+        {% if section.settings.show_search %}
+          <button
+            class="{{ link_class }}"
+            @click="toggleSearch()"
+          >
+            {% render 'icon-search', class: icon_class %}
+          </button>
 
-        <div class="text-body flex items-center bg-white px-2 absolute z-40 top-2 left-0 right-0 md:w-full md:p-4 md:!ml-0" x-show="isOpenSearch" x-cloak>
-          {% render 'search-form', small_button: true %}
-          <span class="ml-4 cursor-pointer" @click="toggleSearch()">
-            {% render 'icon-cancel' %}
-          </span>
-        </div>
+          <div class="text-body flex items-center bg-white px-2 absolute z-40 top-2 left-0 right-0 md:w-full md:p-4 md:!ml-0" x-show="isOpenSearch" x-cloak>
+            {% render 'search-form', small_button: true %}
+            <span class="ml-4 cursor-pointer" @click="toggleSearch()">
+              {% render 'icon-cancel' %}
+            </span>
+          </div>
+      
+        {% endif %}
 
         {% if shop.customer_accounts_enabled %}
           <a
@@ -73,23 +79,25 @@ x-data="{
         </span>
         {% endcomment %}
 
-        {% comment %}
-        <a
-          href="{{ routes.cart_url }}"
-          class="{{ link_class }} relative"
-        >
-          {% render 'icon-cart', class: icon_class %}
+        {%  if section.settings.cart_type == 'regular' %}
+              <a
+              href="{{ routes.cart_url }}"
+              class="{{ link_class }} relative"
+            >
+              {% render 'icon-cart', class: icon_class %}
 
-          {% if cart.item_count > 0 %}
-            <div class="w-5 h-5 flex justify-center items-center bg-black text-white text-xs border border-white rounded-full absolute top-0 right-0">
-              {{ cart.item_count }}
+              {% if cart.item_count > 0 %}
+                <div class="w-5 h-5 flex justify-center items-center bg-black text-white text-xs border border-white rounded-full absolute top-0 right-0">
+                  {{ cart.item_count }}
+                </div>
+              {% endif %}
+            </a>
+        {% elsif  section.settings.cart_type == 'ajax_cart' %}
+            <div class="go-cart-button-wrapper overflow-hidden">
+              {% render 'go-cart-button' %}
             </div>
-          {% endif %}
-        </a>
-        {% endcomment %}
-        <div class="go-cart-button-wrapper overflow-hidden">
-          {% render 'go-cart-button' %}
-        </div>
+        {% endif %}
+      
 
 
       </div>
@@ -132,6 +140,38 @@ x-data="{
       "id": "desktop_sticky",
       "label": "Desktop sticky header",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_desktop_nav",
+      "label": "Hide desktop nav",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search bar",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "cart_type",
+      "label": "Header cart type",
+      "default": "regular",
+      "options": [
+        {
+          "value": "regular",
+          "label": "Regular Cart Link"
+        },
+        {
+          "value": "ajax_cart",
+          "label": "Side Cart"
+        },
+        {
+          "value": "none",
+          "label": "Hide Cart"
+        }
+      ]
     }
   ],
   "blocks": [

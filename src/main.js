@@ -12,14 +12,19 @@ window.Alpine = Alpine
 
 Alpine.start()
 
-const goCartOptions = { 
-    cartHtml: "whatever",
+const goCartTrigger = document.querySelector('.go-cart__trigger')
+
+if(goCartTrigger){
+  const goCartOptions = { 
+    cartHtml: "",
     labelRemove: "",
     labelQuantity: "", 
     useDropdown: false
    }
    
-const goCart = new GoCart(goCartOptions);
+  const goCart = new GoCart(goCartOptions);
+}
+
 const swiper_options = (name) => ({
   modules: [Navigation, Pagination],
   pagination: {
