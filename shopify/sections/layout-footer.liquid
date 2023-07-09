@@ -1,23 +1,20 @@
-<div class="border-t border-gray-200 pt-12 pb-24">
-  <div class="container grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-x-4 gap-y-8">
-    <div>
-      <div class="text-lg font-bold mb-3">
-        {{ 'footer.menu' | t }}
-      </div>
-
-      {% for link in linklists.footer.links %}
-        <div class="space-y-1">
-          <div>
-            <a
-              href="{{ link.url }}"
-              class="text-gray-600 hover:text-black transition duration-150"
-            >
+<div class="border-t border-gray-200 py-24">
+  <div class="c-container-padded flex justify-between">
+    {% for block in section.blocks %}
+        {% if block.type == 'image' %}
+          {{  block.settings.image | image_url: width: block.settings.image_width | image_tag }}
+        {%  elsif  block.type == 'links'%}
+        <div class="flex space-x-8">
+          {% for link in block.settings.menu.links %}
+            <a href="{{link.url}}">
               {{ link.title }}
             </a>
-          </div>
+          {% endfor %}
         </div>
-      {% endfor %}
-    </div>
+        {% endif %}
+    {% endfor %}
+  </div>  
+  <div class="c-container-padded grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-x-4 gap-y-8 mt-16">
 
     {% if
       section.settings.social_instagram_visible or
@@ -80,20 +77,34 @@
   </div>
 </div>
 
-<div class="border-t border-gray-200 py-8">
-  <div class="container text-sm text-gray-600 font-medium text-center">
-    &copy; {{ 'now' | date: "%Y" }} {{ shop.name }}
+{% if section.settings.show_copyright %}
+  <div class="border-t border-gray-200 py-8">
+    <div class="container text-sm font-medium text-center">
+      &copy; {{ 'now' | date: "%Y" }} {{ shop.name }}
+    </div>
   </div>
-</div>
+{% endif %}
 
 {% schema %}
 {
   "name": "t:sections.footer.name",
+  "class": "bg-secondary text-white",
   "settings": [
     {
       "type": "header",
       "content": "t:sections.footer.settings.header.content",
       "info": "t:sections.footer.settings.header.info"
+    },
+    {
+      "type": "link_list",
+      "id": "navigation_menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "secondary_navigation_menu",
+      "label": "Secondary Menu"
     },
     {
       "type": "header",
@@ -155,6 +166,42 @@
       "type": "checkbox",
       "id": "show_payment_methods",
       "label": "Show payment methods"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_copyright",
+      "label": "Show copyright"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "number",
+          "id": "image_width",
+          "label": "Max Image Width (px)",
+          "default": 100
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "name": "Links",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "default": "main-menu"
+        }
+      ]
     }
   ]
 }
