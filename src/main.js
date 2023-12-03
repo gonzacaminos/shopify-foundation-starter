@@ -6,6 +6,8 @@ import { createPinia } from 'pinia'
 import './scss/main.scss'
 import App from './vue/App.vue'
 import {Ajaxinate} from 'ajaxinate';
+import GLightbox from 'glightbox';
+
 
 /**
  * create vue instance function
@@ -73,6 +75,12 @@ new Ajaxinate({
   method: 'click'
   });
 
+
+  const lightbox = GLightbox({
+    touchNavigation: true,
+    loop: true,
+    autoplayVideos: true
+  });
 
 if (Shopify.designMode) {
   document.addEventListener('shopify:section:load', (event) => {
