@@ -3,6 +3,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
+      "@/vue": ["./src/vue/*"],
       "@shopify-directory/*": ["./shopify/*"]
     }
   }

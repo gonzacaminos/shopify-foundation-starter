@@ -1,8 +1,9 @@
 <script>
 import { toRefs, ref } from 'vue'
+import {useProductStore} from '@/vue/store/product.js'
 
 export default {
-  props: {
+  props: { 
     currentVariant: {
       type: Object,
       required: true
@@ -23,7 +24,11 @@ export default {
       productVariants
     } = toRefs(props)
 
+    const store = useProductStore()
+
     const selectedVariant = ref(currentVariant.value)
+
+    store.currentVariant = selectedVariant.value
 
     const selectOption = ({ name }, $event) => {
       const selectedValue = $event.target.value
@@ -38,8 +43,8 @@ export default {
       productVariants.value.some(variant => {
         if (variant.options.every(option => targetOptions.includes(option))) {
           selectedVariant.value = variant
-
-          goToVariant(selectedVariant.value.id)
+          store.currentVariant = variant
+          // goToVariant(selectedVariant.value.id)
           return true
         }
       })
@@ -52,7 +57,7 @@ export default {
     }
 
     return () => slots.default({
-      selectedVariant: selectedVariant.value,
+      selectedVariant: selectedVariant?.value,
       selectOption
     })
   }
