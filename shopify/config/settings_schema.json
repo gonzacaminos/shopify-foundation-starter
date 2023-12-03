@@ -4,19 +4,68 @@
     "theme_name": "Shopify Theme Lab",
     "theme_version": "1.0.0",
     "theme_author": "THEME_AUTHOR",
-    "theme_documentation_url": "https://THEME_DOCUMENTATION_URL.com",
-    "theme_support_url": "https://THEME_SUPPORT_URL.com"
+    "theme_documentation_url": "https:\/\/THEME_DOCUMENTATION_URL.com",
+    "theme_support_url": "https:\/\/THEME_SUPPORT_URL.com"
   },
   {
-    "name": "t:settings_schema.custom_settings.name",
+    "name": "Colors",
     "settings": [
       {
         "type": "header",
-        "content": "t:settings_schema.custom_settings.settings.header"
+        "content": "Colors"
       },
       {
-        "type": "paragraph",
-        "content": "t:settings_schema.custom_settings.settings.paragraph"
+        "type": "color",
+        "id": "colors_primary",
+        "default": "#121212",
+        "label": "Primary"
+      },
+      {
+        "type": "color",
+        "id": "colors_secondary",
+        "default": "#121212",
+        "label": "Secondary"
+      },
+      {
+        "type": "color",
+        "id": "colors_accent",
+        "default": "#121212",
+        "label": "Accent"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_header_font",
+        "default": "assistant_n4",
+        "label": "Headings font"
+      },
+      {
+        "type": "header",
+        "content": "Body font"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "default": "assistant_n4",
+        "label": "Body font"
+      },
+      {
+        "type": "range",
+        "id": "body_scale",
+        "min": 100,
+        "max": 200,
+        "step": 5,
+        "unit": "%",
+        "label": "Body font size scale",
+        "default": 160
       }
     ]
   }

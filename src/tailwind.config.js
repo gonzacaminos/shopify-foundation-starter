@@ -26,12 +26,9 @@ module.exports = {
         "footer" : "linear-gradient(94.61deg, #0BC6E3 20.96%, #8600C5 86.91%)",
       },
       colors: {
-        "accent" : {
-          "DEFAULT": "#FFC80B",
-          "darker" : "#e2ab29"
-        },
-        "primary" : "#BC2EFF",
-        "secondary" : "#6830CC"
+        primary: 'rgb(var(--color-primary-raw) / <alpha-value>)',
+        secondary: 'rgb(var(--color-secondary-raw) / <alpha-value>)',
+        accent: 'rgb(var(--color-accent-raw) / <alpha-value>)'
       },
       fontFamily : {
        /* "titles" : "Oswald, sans-serif",

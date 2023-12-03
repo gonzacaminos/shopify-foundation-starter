@@ -1,19 +1,9 @@
-    <ul class="main-menu flex h-full items-center {% unless bottom_navigation %}hidden lg:flex{% endunless %}" role="list"
-    x-data="{
-        activeMenu: -1,
-        selected: 1,
-        get isActive() {  return this.activeMenu },
-        get isSelected() {  return this.selected },
-        select(_sel) { this.selected = _sel },
-        setActiveMenu(_sel) { this.activeMenu = _sel },
-      }"
-    >
+    <ul class="main-menu flex h-full items-center {% unless bottom_navigation %}hidden lg:flex{% endunless %}" role="list">
       {%- for link in menu.links -%}
           {%liquid assign link_title_downcase = link.title | downcase 
           assign link_title_downcase = link.title | downcase 
           assign mega_menu_block = '' 
         
-  
          for block in section.blocks 
            assign menu_item_downcase = block.settings.menu_item | downcase 
   
@@ -23,7 +13,7 @@
            endif 
          endfor %}
   
-        <li class="text-sm uppercase leading-tight flex h-full px-8 items-center {% if mega_menu_block != '' %}has-dropdown{% endif %}" data-item-title="{{ link.title | escape }}" @mouseenter="setActiveMenu({{ forloop.index }})"  @mouseleave="setActiveMenu(-1)">
+        <li class="text-sm uppercase leading-tight flex h-full px-8 items-center transition transition-all {% if mega_menu_block != '' %}has-dropdown{% endif %}" data-item-title="{{ link.title | escape }}" @mouseenter="setActiveMenu({{ forloop.index }})"  @mouseleave="setActiveMenu(-1)">
           <a class="flex items-center border-b transition duration-150 mt-px {% if link.active %}border-black{% else %}border-transparent hover:border-black{% endif %}" href="{{ link.url }}" {% if link.links.size > 0 or mega_menu_block != '' %} aria-controls="desktop-menu-{{ forloop.index }}" aria-expanded="false"{% endif %}>
             {{- link.title -}}
             {% if mega_menu_block != '' %}<span class="ml-2 mb-px"> {% render 'icon-chevron-down' %}</span>{% endif %}
@@ -32,9 +22,9 @@
   
           {%- if mega_menu_block != '' -%}
   
-            
-              <div id="desktop-menu-{{ forloop.index }}" class="drop-shadow-md self-start mt-24 absolute w-full left-0 right-0 bg-white z-50 mega-menu" {{ mega_menu_block.shopify_attributes }} x-show="isActive == {{ forloop.index }}" x-cloak>
-                <div class="container h-full static py-8 mega-menu__inner">
+            <transition name="slide-mega-menu">
+              <div id="desktop-menu-{{ forloop.index }}" class="drop-shadow-md self-start mt-24 absolute w-full left-0 right-0 bg-white z-50 mega-menu" {{ mega_menu_block.shopify_attributes }}  v-show="activeMenu == {{ forloop.index }}" v-cloak>
+                <div class="c-container-padded h-full static py-8 mega-menu__inner">
                   
                   {%- if mega_menu_block.type == 'mega_menu_product' -%}
                   <div class="grid grid-cols-5 space-x-4">
@@ -57,6 +47,7 @@
                                      
                 </div>
               </div>
+            </transition>
           {%- elsif link.links.size > 0 -%}
             <ul hidden id="desktop-menu-{{ forloop.index }}" class="nav-dropdown {% if link.levels == 1 %}nav-dropdown--restrict{% endif %} list--unstyled" role="list">
               {%- for sub_link in link.links -%}

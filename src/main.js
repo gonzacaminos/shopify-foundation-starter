@@ -1,106 +1,69 @@
 /**
  * imports
  */
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import './scss/main.scss'
-import Alpine from 'alpinejs'
-import GoCart from '@lonelypixels/gocart';
-import Swiper, { Navigation, Pagination, Scrollbar } from 'swiper';
+import App from './vue/App.vue'
 import {Ajaxinate} from 'ajaxinate';
-import GLightbox from 'glightbox';
 
-window.Alpine = Alpine
+/**
+ * create vue instance function
+ */
+const createVueApp = (selector) => {
+  const app = createApp(App)
 
-Alpine.start()
+  /**
+   * vue components
+   * auto-import all vue components
+   */
+  const pinia = createPinia()
+  // pinia.use(createPersistedState({
+  //   key: id => `__persisted__${selector}__${id}_${window.Shopify.theme.id}`,
+  // }))
 
-const goCartTrigger = document.querySelector('.go-cart__trigger')
+  const vueComponents = require.context('./vue/components/', true, /\.(vue|js)$/)
 
-if(goCartTrigger){
-  const goCartOptions = { 
-    cartHtml: "",
-    labelRemove: "",
-    labelQuantity: "", 
-    useDropdown: false
-   }
-   
-  const goCart = new GoCart(goCartOptions);
+  vueComponents.keys().forEach(key => {
+    const component = vueComponents(key).default
+
+    // if a component has a name defined use the name, else use the path as the component name
+    const name = component.name
+      ? component.name
+      : key.replace(/\.(\/|vue|js)/g, '').replace(/(\/|-|_|\s)\w/g, (match) => match.slice(1).toUpperCase())
+
+    app.component(name, component)
+  })
+
+  /**
+   * vue plugins
+   * extend with additional features
+   */
+  app.use(pinia)
+  
+  app.config.compilerOptions.delimiters = ['${', '}']
+  return app
 }
 
-const swiper_options = (name) => ({
-  modules: [Navigation, Pagination],
-  pagination: {
-      el: `.swiper-pagination.pagination-${name}`,
-      clickable: true
-    },
-  navigation: {
-      nextEl: `.swiper-button-next.button-${name}`,
-      prevEl: `.swiper-button-prev.button-${name}`,
-      lockClass: 'lock',
-      navigationDisabledClass: 'dis'
-  }
-})
+/**
+ * create and mount vue instance(s)
+ */
+const appElements = document.querySelectorAll('.vue-app')
 
+appElements.forEach( e => createVueApp(e).mount(e) )
 
-const carousels = document.querySelectorAll('.swiper');
-
-carousels.forEach(function(carousel) {
-  var swiper = new Swiper(carousel, swiper_options(carousel.id));
-});
-
-const swiper_scroll = new Swiper(".swiper-scroll", {
-  modules: [Navigation, Pagination, Scrollbar],
-  slidesPerView: 1,
-  spaceBetween: 10,
-  // Responsive breakpoints
-  breakpoints: {
-    // when window width is >= 320px
-    320: {
-      slidesPerView: 2,
-      spaceBetween: 20
-    },
-    // when window width is >= 480px
-    480: {
-      slidesPerView: 3,
-      spaceBetween: 30
-    },
-    // when window width is >= 640px
-    640: {
-      slidesPerView: 4,
-      spaceBetween: 40
-    }
-  },
-  centeredSlides: false,
-  scrollbar: {
-    el: ".swiper-scrollbar",
-    hide: false,
-    draggable: true
-  },
-  navigation: {
-    nextEl: ".swiper-button-next.scroll",
-    prevEl: ".swiper-button-prev.scroll",
-  }
-});
-
-Shopify.queryParams = {};
-// Preserve existing query parameters
-if (location.search.length) {
-  var params = location.search.substr(1).split('&');
-  for (var i = 0; i < params.length; i++) {
-    var keyValue = params[i].split('=');
-    if (keyValue.length) {
-      Shopify.queryParams[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1]);
-    }
-  }
-}
-// Update sort_by query parameter on select change
-const sort_by = document.querySelector('#sort-by')
-
-if(sort_by) {
-  sort_by.addEventListener('change', function(e) {
-    var value = e.target.value;
-    Shopify.queryParams.sort_by = value;
-    location.search = new URLSearchParams(Shopify.queryParams).toString();
-  });
-}
+/**
+ * fixes for Shopify sections
+ * 1. properly render vue components on user insert in the theme editor
+ * 2. reload the current page to rerender async inserted sections with vue components
+ *
+ * add the 'vue' keyword to the section's wrapper classes if the section uses any vue functionality e.g.:
+ * {% schema %}
+ * {
+ *   "class": "vue-section"
+ * }
+ * {% endschema %}
+ */
 
 
 new Ajaxinate({
@@ -108,17 +71,23 @@ new Ajaxinate({
   pagination: '#AjaxinatePagination',
   loadingText: 'Loading more...',
   method: 'click'
-});
+  });
 
-const lightbox = GLightbox({
-  touchNavigation: true,
-  loop: true,
-  autoplayVideos: true
-});
 
-const toggleImages = document.querySelectorAll(".toggleImage")
-for (const button of toggleImages) {
-  button.addEventListener('click', function(event) {
-    lightbox.reload();
+if (Shopify.designMode) {
+  document.addEventListener('shopify:section:load', (event) => {
+    if (event.target.classList.value.includes('vue')) {
+      createVueApp().mount(event.target)
+    }
+  })
+} else if (!Shopify.designMode && process.env.NODE_ENV === 'development') {
+  new MutationObserver((mutationsList) => {
+    mutationsList.forEach(record => {
+      const vue = Array.from(record.addedNodes).find(node => node.classList && node.classList.value.includes('vue'))
+      if (vue) window.location.reload()
+    })
+  }).observe(document.body, {
+    childList: true,
+    subtree: true
   })
 }

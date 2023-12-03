@@ -1,20 +1,8 @@
-<div  x-transition.scale class="relative"
-x-data="{
-    activeMenu: 0,
-    get isActive() {  return this.activeMenu },
-    setActive(_sel) { this.activeMenu = _sel == this.activeMenu ? 0 : _sel },
-  }">
-    <div class="mobile-navigation md:hidden w-full max-w-screen-md  bg-white py-10 border-l absolute top-0 z-30 {{ class | default: '' }}" style="display:none"
-        x-show="isOpen"
-        x-transition:enter="transition-all ease-out duration-200"
-        x-transition:enter-start="-left-full"
-        x-transition:enter-end="left-0"
-        x-transition:leave="transition-all ease-in duration-200"
-        x-transition:leave-start="left-0"
-        x-transition:leave-end="-left-full"
+<div>
+    <div class="mobile-navigation w-full md:max-w-2xl 2xl:max-w-4xl bg-white order-l fixed bottom-0 top-0 -left-full transition-all	 pt-16 md:bottom-auto md:top-auto h-full z-30 {{ class | default: '' }}" :class="mobileOpen ? 'left-0' : ''"
     >  
-        <div class="p-8 flex flex-col h-full">
-            <ul>
+        <div class="md:push-c-container-left flex flex-col h-full px-10 md:pl-0 py-10">
+            <ul class="space-y-16 md:space-y-24">
                 {%- for link in menu.links -%}
                     {% liquid assign has_links = false
                     assign link_url = link.url
@@ -22,10 +10,10 @@ x-data="{
                         assign has_links = true
                         assign link_url = '#'                       
                      endif %}
-                    <li class="text-sm uppercase leading-tight items-center mb-10" data-item-title="{{ link.title | escape }}" >
+                    <li class="text-lg font-display uppercase leading-tight items-center" data-item-title="{{ link.title | escape }}" >
                        
 
-                        <a class="flex items-center border-b transition duration-150" href="{{ link_url }}" {% if has_links %} @click='setActive({{ forloop.index }})'{% endif %} x-bind:class="isActive == {{forloop.index }} ? 'border-black' : 'border-transparent'">
+                        <a class="flex items-center transition duration-150 hover:text-accent" href="{{ link_url }}" {% if has_links %} @click='setActive({{ forloop.index }})'{% endif %} x-bind:class="isActive == {{forloop.index }} ? 'border-black' : 'border-transparent'">
                             {{- link.title -}}
                             {%- if has_links -%}
                                 <span class="ml-2 mb-1 transform" x-bind:class="isActive == {{ forloop.index }} ? 'rotate-180' : ''"> {% render 'icon-chevron-down' %}</span>
@@ -48,28 +36,27 @@ x-data="{
                 {% endfor %}
             </ul>
 
-            <ul class="mt-20">
-                    <li class="text-sm uppercase leading-tight items-center mb-10">
-                    
-                        <a class="flex items-center" href="{{ link_url }}">
-                            Login
+            <ul class="mt-auto mb-12">
+                {%- for link in bottom_menu.links -%}
+                    {% liquid assign has_links = false
+                     assign link_url = link.url
+                     if link.links.size > 0 
+                        assign has_links = true
+                        assign link_url = '#'                       
+                     endif %}
+                    <li class="text-sm text-right font-display uppercase leading-tight items-center mb-10" data-item-title="{{ link.title | escape }}" >
+                       
+                        <a class="hover:text-accent" href="{{ link_url }}">
+                            {{- link.title -}}
                         </a>
                        
                     </li>
-
-                    <li class="text-sm uppercase leading-tight items-center mb-10">
-                    
-                        {% comment %}{% render 'layout-select-locale' %} {% endcomment %}
-                       
-                    </li>
-
-                    <li class="text-sm uppercase leading-tight items-center mb-10">
-                    
-                        {% render 'layout-social' %}
-                       
-                    </li>
+                {% endfor %}
             </ul>
            
         </div>
-      </div>
+    </div>
+    <button  v-show="mobileOpen" @click="toggleMenu()" class="w-full h-full fixed inset-0">
+
+    </button>
 </div>

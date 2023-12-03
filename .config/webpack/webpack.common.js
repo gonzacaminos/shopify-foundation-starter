@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
   stats: 'minimal',
@@ -72,8 +73,9 @@ module.exports = {
      * don't clean files with the 'static' keyword in their filename
      * docs: https://github.com/johnagan/clean-webpack-plugin
      */
-
-
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ['**/*', '!*static*']
+    }),
     /**
      * docs: https://webpack.js.org/plugins/mini-css-extract-plugin
      */
@@ -81,5 +83,10 @@ module.exports = {
       filename: './bundle.css',
       chunkFilename: '[id].css'
     }),
+    new VueLoaderPlugin(),
+    new webpack.DefinePlugin({
+      __VUE_OPTIONS_API__: 'true',
+      __VUE_PROD_DEVTOOLS__: 'false'
+    })
   ]
 }

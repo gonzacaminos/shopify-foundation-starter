@@ -1,13 +1,4 @@
-<div class="bg-white border-b border-gray-200"
-x-data="{
-  openMobile: false,
-  openSearch: false,
-  get isOpen() {  return this.openMobile },
-  toggleMenu() { this.openMobile = !this.openMobile },
-  get isOpenSearch() {  return this.openSearch },
-  toggleSearch() { this.openSearch = !this.openSearch }
-}"
->
+<div class="bg-white border-b border-gray-200">
 
   {% assign icon_class = 'w-auto h-7 text-black' %}
   {% assign link_class = 'flex flex-col justify-center items-center text-sm text-gray-600 hover:text-black font-medium transition duration-150 p-2' %}
@@ -16,10 +7,10 @@ x-data="{
    
     <div class="h-16 md:h-24 flex justify-between md:justify-start items-center pr-3">
 
-      <div class="mr-8 flex {% unless section.settings.hide_desktop_nav %} md:hidden {% endunless %} items-center">
-        <button @click="toggleMenu()" class="{{ link_class }}">
-          <span x-show="!isOpen">{% render 'icon-menu', class: icon_class %}</span>
-          <span x-cloak x-show="isOpen">{% render 'icon-cancel', class: icon_class %}</span>
+      <div class="flex {% unless section.settings.hide_desktop_nav %} md:hidden {% endunless %} items-center relative z-50 mr-4">
+        <button @click="toggleMenu()">
+          <span v-show="!mobileOpen">{% render 'icon-menu', class: icon_class %}</span>
+          <span v-show="mobileOpen" v-cloak class="">{% render 'icon-cancel', class: icon_class %}</span>
         </button>
       </div>
 
@@ -55,7 +46,7 @@ x-data="{
             {% render 'icon-search', class: icon_class %}
           </button>
 
-          <div class="text-body flex items-center bg-white px-2 absolute z-40 top-2 left-0 right-0 md:w-full md:p-4 md:!ml-0" x-show="isOpenSearch" x-cloak>
+          <div class="text-body flex items-center bg-white px-2 absolute z-40 top-2 left-0 right-0 md:w-full md:p-4 md:!ml-0" v-show="isOpenSearch" v-cloak>
             {% render 'search-form', small_button: true %}
             <span class="ml-4 cursor-pointer" @click="toggleSearch()">
               {% render 'icon-cancel' %}

@@ -10,7 +10,7 @@
       {{ image | image_url: width: 1000 | image_tag: class: 'w-full h-full object-cover object-center aspect-video', loading: 'lazy', sizes: '(min-width: 1536px) 1000px,(min-width: 1280px) 850px,(min-width: 1024px) 700px,(min-width: 768px) 400px,(min-width: 640px) 500px' }}
     {% endif %}
   
-    <div class="container absolute inset-0 w-full h-full flex items-end justify-start">
+    <div class="c-container-padded absolute inset-0 w-full h-full flex items-end justify-start">
       <h1 class="text-white uppercase text-2xl md:text-[80px] font-extrabold mb-6 md:mb-16 leading-none">
         {{ collection.title }}
       </h1>
@@ -20,12 +20,12 @@
 
   {% if collection and collection.products %}
     {% assign amount = collection.all_products_count %}
-    <div class="container">
+    <div class="c-container-padded">
       {% render 'layout-sort-bar', amount: amount class: 'my-8' %}
     </div>
   {% endif %}
 
-  <div class="container py-10 lg:grid lg:grid-cols-6 lg:gap-x-16 lg:gap-y-">
+  <div class="c-container-padded py-10 lg:grid lg:grid-cols-6 lg:gap-x-16 lg:gap-y-">
     <div class="col-span-1 pr-5">
       {% render 'filters' %}
     </div>

@@ -1,4 +1,118 @@
 {
   "current": {
+    "colors_secondary": "#434141",
+    "colors_accent": "#fa4a37",
+    "type_header_font": "archivo_narrow_n4",
+    "type_body_font": "roboto_n4",
+    "sections": {
+      "layout-announcement-bar": {
+        "type": "layout-announcement-bar",
+        "settings": {
+          "visible": false,
+          "home_page_only": true,
+          "content": "Lorem ipsum dolor sit amet."
+        }
+      },
+      "layout-header": {
+        "type": "layout-header",
+        "blocks": {
+          "a5c4fe9f-7849-4f6e-9bc4-630147b7b5a3": {
+            "type": "mega_menu_links",
+            "settings": {
+              "menu_item": "HOME",
+              "title_1": "First",
+              "links_1": "main-menu",
+              "collection_url_title_1": "",
+              "collection_url_1": "",
+              "title_2": "Second",
+              "links_2": "main-menu",
+              "collection_url_title_2": "",
+              "collection_url_2": "",
+              "title_3": "",
+              "links_3": "",
+              "collection_url_title_3": "",
+              "collection_url_3": "",
+              "collection_url_title": "",
+              "collection_url": ""
+            }
+          },
+          "a79b2b7c-056d-4b62-89b5-5f5833932124": {
+            "type": "mega_menu_product",
+            "settings": {
+              "menu_item": "CATALOG",
+              "product_1": "guernica-pablo-picasso",
+              "title_1": "Guernica",
+              "url_1": "",
+              "product_2": "girl-with-a-pearl-earring-johannes-vermeer",
+              "title_2": "Girl with a pearl",
+              "url_2": "",
+              "product_3": "",
+              "title_3": "",
+              "url_3": "",
+              "product_4": "",
+              "title_4": "",
+              "url_4": "",
+              "collection_url_title": "",
+              "collection_url": ""
+            }
+          }
+        },
+        "block_order": [
+          "a5c4fe9f-7849-4f6e-9bc4-630147b7b5a3",
+          "a79b2b7c-056d-4b62-89b5-5f5833932124"
+        ],
+        "settings": {
+          "navigation_menu": "main-menu",
+          "mobile_sticky": false,
+          "desktop_sticky": false,
+          "hide_desktop_nav": false,
+          "show_search": false,
+          "cart_type": "regular"
+        }
+      },
+      "go-cart": {
+        "type": "go-cart",
+        "settings": {
+          "cart_heading": "Your cart",
+          "enable_upsells": true,
+          "upsells_title": "How about these?",
+          "max_upsell_items": 6,
+          "max_upsell_per_collection": 3,
+          "checkout_button_label": "Checkout",
+          "collection_featured": ""
+        }
+      },
+      "layout-footer": {
+        "type": "layout-footer",
+        "blocks": {
+          "f349b889-03f0-419c-b3ce-1deafb218eab": {
+            "type": "links",
+            "settings": {
+              "menu": "main-menu"
+            }
+          }
+        },
+        "block_order": [
+          "f349b889-03f0-419c-b3ce-1deafb218eab"
+        ],
+        "settings": {
+          "navigation_menu": "main-menu",
+          "secondary_navigation_menu": "",
+          "social_instagram_visible": false,
+          "social_instagram_link": "",
+          "social_twitter_visible": false,
+          "social_twitter_link": "",
+          "social_facebook_visible": false,
+          "social_facebook_link": "",
+          "social_youtube_visible": false,
+          "social_youtube_link": "",
+          "show_payment_methods": false,
+          "show_copyright": false
+        }
+      }
+    },
+    "content_for_index": [
+
+    ]
   }
 }

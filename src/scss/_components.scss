@@ -19,7 +19,7 @@ details.accordion {
     }
 
     .accordion-content {
-        @apply pl-5 py-4;
+        @apply px-2 py-4;
 
         label {
             @apply flex items-center;
@@ -34,3 +34,16 @@ details.accordion {
 input {
     border: 1px solid;
 }
+
+/**
+ * slide-mobile-menu
+ */
+ .slide-mega-menu-enter-active,
+ .slide-mega-menu-leave-active {
+   @apply transition duration-200;
+ }
+ 
+ .slide-mega-menu-enter-from,
+ .slide-mega-menu-leave-to {
+   @apply transform opacity-0;
+ }
